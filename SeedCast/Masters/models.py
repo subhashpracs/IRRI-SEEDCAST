@@ -179,7 +179,7 @@ class Mobnum(models.Model):
 
 class VAWDemand(models.Model):
     village_name = models.ForeignKey(Villages)
-    strv_variety = models.ForeignKey(STRVVariety)
+    variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField(default=datetime.now())
     check = models.BooleanField(default=True)
@@ -192,7 +192,7 @@ class VAWDemand(models.Model):
         return self.village_name
 
 class Demand(models.Model):
-    strv_variety = models.ForeignKey(STRVVariety)
+    variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField()
     chk = models.BooleanField(default=True)
