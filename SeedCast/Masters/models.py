@@ -135,6 +135,12 @@ class VAW_Registration(models.Model):
         return self.VAW_name
 
 class STRVCategory(models.Model):
+    def image_tag(self):
+        return u'<img src="%s" />' %  '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast/pics'
+
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
+
     category_name = models.CharField(max_length=255)
     category_short_code = models.CharField(max_length=255)
     category_description = models.CharField(max_length=650)
