@@ -172,9 +172,59 @@ class BarView(HighChartsBarView):
 
 
 #Dealer Demand model
-class DemandList(generics.ListCreateAPIView):
-    queryset = Demand.objects.all()
-    serializer_class = DemandSerializer
+# class DemandList(generics.ListCreateAPIView):
+#     queryset = Demand.objects.all()
+#     serializer_class = DemandSerializer
+
+
+class DemandList(APIView):
+
+    def get(self, request, format=None):
+        demand = Demand.objects.all()
+        serializer = MobnumSerializer(demand, many=True)
+        return Response(serializer.data)
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = DemandSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        demand = self.get_object(pk)
+        demand.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class DemandDetail(APIView):
+    """
+    Retrieve, update or delete a user instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Demand.objects.get(pk=pk)
+        except Demand.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        demand = self.get_object(pk)
+        demand = MobnumSerializer(demand)
+        return Response(demand.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializer = DemandSerializer(user, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 #Feedback...
 class Feedback(APIView):

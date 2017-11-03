@@ -20,14 +20,11 @@ from SeedCast import views
 import Masters.views as some
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register(r'api/mobile', some.MobileViewSet)
+
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     url(r'^admin/', admin.site.urls),

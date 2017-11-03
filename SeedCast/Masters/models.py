@@ -8,10 +8,8 @@ from django import forms
 
 
 # Create your models here.
-
-
 class States(models.Model):
-    state_name = models.CharField(max_length=100)
+    state_name = models.CharField(max_length=100, primary_key=True)
     class Meta:
         verbose_name = _('State')
         verbose_name_plural = _('States')
@@ -22,7 +20,7 @@ class States(models.Model):
 
 class Districts(models.Model):
     state_name = models.ForeignKey(States)
-    dist_name = models.CharField(max_length=100)
+    dist_name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
         verbose_name = _('District')
@@ -34,7 +32,7 @@ class Districts(models.Model):
 class Blocks(models.Model):
     state_name = models.ForeignKey(States)
     dist_name = models.ForeignKey(Districts)
-    block_name = models.CharField(max_length=100)
+    block_name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
         verbose_name = ('Block')
@@ -47,7 +45,7 @@ class Panchayats(models.Model):
     state_name = models.ForeignKey(States)
     dist_name = models.ForeignKey(Districts)
     block_name = models.ForeignKey(Blocks)
-    panchayat_name = models.CharField(max_length=100)
+    panchayat_name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
         verbose_name = ('Panchayat')
@@ -61,7 +59,7 @@ class Villages(models.Model):
     dist_name = models.ForeignKey(Districts)
     block_name = models.ForeignKey(Blocks)
     panchayat_name = models.ForeignKey(Panchayats)
-    village_name = models.CharField(max_length=100)
+    village_name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
         verbose_name = ('Village')
@@ -151,10 +149,9 @@ class STRVCategory(models.Model):
         return self.category_short_code + '-' + self.category_name
 
 class STRVVariety(models.Model):
-    variety_name = models.CharField(max_length=255)
+    variety_name = models.CharField(max_length=255, primary_key=True)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)
-
     duration_in_days = models.PositiveIntegerField()
     suitable_land_type = models.CharField(max_length=200)
     plant_height = models.PositiveIntegerField()

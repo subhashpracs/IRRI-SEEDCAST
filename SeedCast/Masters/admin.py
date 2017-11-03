@@ -145,7 +145,8 @@ admin.site.register(Feedback)
 class BlocksResource(resources.ModelResource):
     class Meta:
         model = Blocks
-        fields = ('state_name', 'dist_name', 'block_name')
+        exclude = ('id',)
+        import_id_fields = ('state_name', 'dist_name', 'block_name')
 
 class BlocksAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state', 'get_district', 'block_name',)
@@ -173,7 +174,8 @@ admin.site.register(Blocks, BlocksAdmin)
 class PanchayatsResource(resources.ModelResource):
     class Meta:
         model = Panchayats
-        fields = ('state_name', 'dist_name', 'block_name', 'panchayat_name')
+        exclude = ('id',)
+        import_id_fields = ('state_name', 'dist_name', 'block_name', 'panchayat_name')
 
 class PanchayatsAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state_name', 'get_district_name', 'get_block_name', 'panchayat_name',)
@@ -203,7 +205,8 @@ admin.site.register(Panchayats, PanchayatsAdmin)
 class VillagesResource(resources.ModelResource):
     class Meta:
         model = Villages
-        fields = ('state_name', 'dist_name', 'block_name', 'panchayat_name', 'village_name')
+        exclude = ('id',)
+        import_id_fields = ('state_name', 'dist_name', 'block_name', 'panchayat_name', 'village_name')
 
 class VillagesAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state_name', 'get_dist_name', 'get_block_name', 'get_panchayat_name', 'village_name')
