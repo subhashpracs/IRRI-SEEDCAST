@@ -7,7 +7,7 @@ from import_export import fields
 #django-import-export
 from jet.admin import CompactInline
 from import_export import resources
-from Masters.models import Dealer_Registration,AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, States, Districts, Blocks, Panchayats, Villages, VAWDemand, Demand, Pilotplots, Feedback
+from Masters.models import Dealer_Registration,AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, States, Districts, Blocks, Panchayats, Villages, VAWDemand, DealerDemand, Pilotplots, Feedback, Stock, VAWDemand
 
 
 admin.site.site_header = 'SeedCast'
@@ -133,13 +133,17 @@ admin.site.register(STRVVariety, STRVVarietyAdmin)
 
 admin.site.register(VAWDemand)
 
-admin.site.register(Demand)
+admin.site.register(DealerDemand)
 
 admin.site.register(Pilotplots)
 
 admin.site.register(Feedback)
 
 
+admin.site.register(Stock)
+
+
+admin.site.register(VAWDemand)
 
 #Blocks
 class BlocksResource(resources.ModelResource):
