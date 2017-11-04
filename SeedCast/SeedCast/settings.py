@@ -25,7 +25,7 @@ SECRET_KEY = '4s%pxae4%a3&z5-t2*_-@x03ex)n!0%oqk#k2r6#fa5)bkn4h1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '35.154.189.226' ]
 
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'report_builder',
     'highcharts',
     'corsheaders',
-    'rest_framework.authtoken',
+    #'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -64,8 +64,6 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True#For Allow-Access-Control headers
 
 CORS_ORIGIN_WHITELIST = ('35.154.189.226:6565',)
-
-
 
 ROOT_URLCONF = 'SeedCast.urls'
 
@@ -87,6 +85,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'SeedCast.wsgi.application'
 
 
@@ -97,11 +96,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'OPTIONS': {
-            # ...
-            'timeout': 100,
-            # ...
-        }
+        # 'OPTIONS': {
+        #     # ...
+        #     'timeout': 100,
+        #     # ...
+        # }
     }
 }
 
@@ -146,8 +145,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_root')
 
 STATIC_URL = '/static/'
-
-
 
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static/'),

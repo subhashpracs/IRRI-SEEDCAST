@@ -226,13 +226,12 @@ class DemandDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-#Feedback...
-class Feedback(APIView):
+#Feedback post url
+class FeedbackList(APIView):
     def get(self, request, format=None):
         feedback = Feedback.objects.all()
         serializer = FeedbackSerializer(feedback, many=True)
         return Response(serializer.data)
-
 
     @csrf_exempt
     def post(self, request, format=None):

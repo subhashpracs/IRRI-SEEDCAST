@@ -188,7 +188,7 @@ class VAWDemand(models.Model):
     variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField(default=datetime.now())
-    check = models.BooleanField(default=True)
+    check = models.BooleanField()
 
     class Meta:
         verbose_name = 'VAW-Demand'

@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     url(r'^admin/', admin.site.urls),
     url(r'^', admin.site.urls),
-    #url(r'^admin/Dealer_reg/dealer_registration/import/', include('models.Dealer_')),
     url(r'^export/xls_users/$', views.export_users_xls, name='export_users_xls'),
     url(r'^xls/$', views.export_xls, name='export_xls'),
     url(r'^registrations/', include('Masters.urls')),
@@ -37,5 +36,5 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^graph/$', some.BarView.as_view()),
     url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT}),
-    url(r'^feedback/$', some.Feedback.as_view()),
+    url(r'^feedback/$', some.FeedbackList.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
