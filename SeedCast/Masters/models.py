@@ -144,7 +144,7 @@ class STRVCategory(models.Model):
     category_name = models.CharField(max_length=255)
     category_short_code = models.CharField(max_length=255)
     category_description = models.CharField(max_length=650)
-    image = models.ImageField(upload_to="pics")
+    image = models.ImageField(upload_to="static/imgs/uploaded/category")
 
     #Meta Class
     class Meta:
@@ -197,7 +197,7 @@ class VAWDemand(models.Model):
     def __str__(self):
         return self.village_name
 
-class Demand(models.Model):
+class DealerDemand(models.Model):
     variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField()
@@ -209,6 +209,18 @@ class Demand(models.Model):
 
     def __str__(self):
         return str(self.quantity)
+
+class Stock(models.Model):
+    variety_name = models.ForeignKey(STRVVariety, primary_key=True)
+    available = models.PositiveIntegerField()
+    date_wn_available = models.DateField()
+
+    class Meta:
+        verbose_name = 'Stock'
+        verbose_name_plural = 'Stocks'
+
+    def __str__(self):
+        return self.variety_name
 
 class Pilotplots(models.Model):
     dist_name = models.ForeignKey(Districts)

@@ -11,13 +11,15 @@ urlpatterns = [
     url(r'^strv_category/$', views.STRVCategoryList.as_view()),
     url(r'^strv_variety/$', views.STRVVarietyList.as_view()),
     url(r'^mob', views.MobnumList.as_view()),
-    url(r'^mob/(?P<pk>[0-9]+)/$', views.MobnumDetail.as_view()),
-    url(r'^demand/$', views.DemandList.as_view()),
+    # url(r'^mob/(?P<pk>[0-9]+)/$', views.MobnumDetail.as_view()),
+    url(r'^dealer_demand/$', views.DealerDemandList.as_view()),
     url(r'^states/$', views.StatesList.as_view()),
     url(r'^districts/$', views.DistrictsList.as_view()),
     url(r'^blocks/$', views.BlocksList.as_view()),
     url(r'^panchayats/$', views.PanchayatsList.as_view()),
     url(r'^villages/$', views.VillagesList.as_view()),
+    url(r'^stocks/$', views.StockList.as_view()),
+    url(r'^vaw_demand/$', views.VAWDemandList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

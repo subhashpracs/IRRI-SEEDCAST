@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, Demand, Feedback, States, Districts, Blocks, Panchayats, Villages
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand
 
 class DealerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,9 +34,9 @@ class MobnumSerializer(serializers.ModelSerializer):
         model = Mobnum
         fields = '__all__'
 
-class DemandSerializer(serializers.ModelSerializer):
+class DealerDemandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Demand
+        model = DealerDemand
         fields = '__all__'
 
 class FeedbackSerializer(serializers.ModelSerializer):
@@ -70,3 +70,15 @@ class VillagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Villages
         fields = '__all__'
+
+
+class StockSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = '__all__'
+
+class VAWDemandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VAWDemand
+        fields = '__all__'
+

@@ -25,7 +25,7 @@ SECRET_KEY = '4s%pxae4%a3&z5-t2*_-@x03ex)n!0%oqk#k2r6#fa5)bkn4h1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '35.154.189.226' ]
+ALLOWED_HOSTS = [ '*' ]
 
 
 # Application definition
@@ -151,8 +151,6 @@ STATICFILES_DIRS = (
   # '/var/www/static/',
   #   "/home/sai/Desktop/Jetpractice/static",
 )
-
-# STATICFILES_DIRS = look_folder_tree(STATIC_ROOT)
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
