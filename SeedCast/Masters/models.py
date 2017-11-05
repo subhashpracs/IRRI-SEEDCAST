@@ -82,9 +82,6 @@ class SPO(models.Model):
 
 
 
-
-
-
 class Dealer_Registration(models.Model):
     shop_name = models.CharField(max_length=255, blank=True)
     license_num = models.CharField(max_length=255, blank=True)
@@ -167,11 +164,12 @@ class STRVVariety(models.Model):
     variety_name = models.CharField(max_length=255, primary_key=True)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)
-    duration_in_days = models.PositiveIntegerField()
+    duration_in_days = models.CharField(max_length=20)
     suitable_land_type = models.CharField(max_length=200)
-    plant_height = models.PositiveIntegerField()
+    plant_height = models.CharField(max_length=20)
     grain_type = models.CharField(max_length=255)
-    yield_in_tonne = models.PositiveIntegerField()
+    yield_in_tonne = models.CharField(max_length=20)
+    yield_advantage = models.CharField(max_length=50)
 
     #Meta Class
     class Meta:
