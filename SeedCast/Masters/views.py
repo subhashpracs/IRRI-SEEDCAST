@@ -57,20 +57,61 @@ class VAWDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 #STRV Category Model View
-class STRVCategoryList(generics.ListCreateAPIView):
-    queryset = STRVCategory.objects.all()
-    serializer_class = STRVCategorySerializer
+# class STRVCategoryList(generics.ListCreateAPIView):
+#     queryset = STRVCategory.objects.all()
+#     serializer_class = STRVCategorySerializer
+#
+# class STRVCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = STRVCategory.objects.all()
+#     serializer_class = STRVCategorySerializer
 
-class STRVCategoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = STRVCategory.objects.all()
-    serializer_class = STRVCategorySerializer
+class STRVCategoryList(APIView):
+
+    def get(self, request, format=None):
+        category = STRVCategory.objects.all()
+        serializer = STRVCategorySerializer(category, many=True)
+        return Response(serializer.data)
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = STRVCategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        category = self.get_object(pk)
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
 #STRV Variety Model view
-class STRVVarietyList(generics.ListCreateAPIView):
-    queryset = STRVVariety.objects.all()
-    serializer_class = STRVVarietySerializer
+# class STRVVarietyList(generics.ListCreateAPIView):
+#     queryset = STRVVariety.objects.all()
+#     serializer_class = STRVVarietySerializer
+class STRVVarietyList(APIView):
+
+    def get(self, request, format=None):
+        variety = STRVVariety.objects.all()
+        serializer = STRVVarietySerializer(variety, many=True)
+        return Response(serializer.data)
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = STRVVarietySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        variety = self.get_object(pk)
+        variety.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
 #Mobile numbers model
 
