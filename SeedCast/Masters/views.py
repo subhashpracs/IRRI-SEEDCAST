@@ -87,12 +87,12 @@ class MobnumList(APIView):
         if serializer.is_valid():
             serializer.save()
             #Getting Dealer objects
-            dealer = list(Dealer_Registration.objects.all())
-            serializer2 = DealerSerializer(dealer, many=True)
-            print(dealer)
-            print("Serializer 2:" + serializer2)
-            if serializer in dealer:
-                return Response(serializer2.data, status=status.HTTP_200_OK)
+            # dealer = list(Dealer_Registration.objects.all())
+            # serializer2 = DealerSerializer(dealer, many=True)
+            # print(dealer)
+            # print("Serializer 2:" + serializer2)
+            # if serializer in dealer:
+            #     return Response(serializer2.data, status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

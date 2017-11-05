@@ -47,15 +47,15 @@ admin.site.register(Districts)
 class DealerResource(resources.ModelResource):
     class Meta:
         model = Dealer_Registration
-        fields = ('id','shop_name', 'licence_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode')
-        export_order = ('id', 'shop_name', 'licence_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode')
+        fields = ('id','shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode')
+        export_order = ('id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode')
 
 
 # @admin.register(Dealer_Registration)
 
 # Exporting via List Filters...
 class DealerAdmin(ImportExportActionModelAdmin):
-     list_display = ('shop_name', 'licence_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
+     list_display = ('shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
      search_fields = ('shop_name', 'dealer_name',)
      list_per_page = 6
      resource_class = DealerResource
@@ -244,7 +244,7 @@ admin.site.register(Villages, VillagesAdmin)
 #Report Builder
 class ReportBuilder:
     fields = (
-    'id', 'shop_name', 'licence_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name','block_name', 'spo', 'date', 'pincode')
+    'id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name','block_name', 'spo', 'date', 'pincode')
 
 
 
