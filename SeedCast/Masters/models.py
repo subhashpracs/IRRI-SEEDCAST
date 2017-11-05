@@ -62,8 +62,8 @@ class Villages(models.Model):
     village_name = models.CharField(max_length=100, primary_key=True)
 
     class Meta:
-        verbose_name = ('Village')
-        verbose_name_plural = ('Villages')
+        verbose_name = _('Village')
+        verbose_name_plural = _('Villages')
 
     def __str__(self):
         return self.village_name
@@ -75,7 +75,7 @@ class SPO(models.Model):
     spo = models.CharField(max_length=255, primary_key=True)
 
     class Meta:
-        verbose_name = 'SPO'
+        verbose_name = _('SPO')
 
     def __str__(self):
         return self.spo
