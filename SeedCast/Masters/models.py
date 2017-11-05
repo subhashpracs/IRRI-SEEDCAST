@@ -115,7 +115,7 @@ class AAO_Registration(models.Model):
         verbose_name_plural = _('AAOs')
 
     def __str__(self):
-        return self.aao_name + '-' + self.block_name
+        return self.aao_name + '-' + str(self.block_name)
 
 
 class VAW_Registration(models.Model):
@@ -195,7 +195,7 @@ class VAWDemand(models.Model):
         verbose_name_plural = 'VAW-Demands'
 
     def __str__(self):
-        return self.village_name
+        return str(self.village_name)
 
 class DealerDemand(models.Model):
     variety_name = models.ForeignKey(STRVVariety)
@@ -231,7 +231,7 @@ class Pilotplots(models.Model):
         verbose_name = 'Pilot Plots'
 
     def __str__(self):
-        return self.panchayat_name
+        return str(self.panchayat_name)
 
 class Feedback(models.Model):
     name = models.CharField(max_length=255)
