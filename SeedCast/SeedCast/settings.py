@@ -159,7 +159,7 @@ STATICFILES_FINDERS = [
 
 
 
-MEDIA_ROOT = '/home/sai/Desktop/Jetpractice/static/uploaded'
+MEDIA_ROOT = '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast'
 
 
 JET_DEFAULT_THEME = 'green' #For Default Theme Colour

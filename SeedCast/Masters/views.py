@@ -7,8 +7,8 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand
-from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO
+from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
@@ -292,6 +292,11 @@ class VillagesList(APIView):
         villages = self.get_object(pk)
         villages.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+#SPOs
+class SPOList(generics.ListCreateAPIView):
+    queryset = SPO.objects.all()
+    serializer_class = SPOSerializer
 
 
 class VAWDemandList(APIView):
