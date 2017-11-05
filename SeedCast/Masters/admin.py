@@ -143,8 +143,6 @@ admin.site.register(Feedback)
 admin.site.register(Stock)
 
 
-admin.site.register(VAWDemand)
-
 #Blocks
 class BlocksResource(resources.ModelResource):
     class Meta:

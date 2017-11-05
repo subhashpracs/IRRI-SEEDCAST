@@ -170,7 +170,7 @@ class STRVVariety(models.Model):
         verbose_name_plural = _('STRV Varieties')
 
     def __str__(self):
-        return self.variety_name + '---' + self.variety_code
+        return self.variety_name
 
 
 class Mobnum(models.Model):
@@ -220,7 +220,7 @@ class Stock(models.Model):
         verbose_name_plural = 'Stocks'
 
     def __str__(self):
-        return self.variety_name
+        return str(self.variety_name)
 
 class Pilotplots(models.Model):
     dist_name = models.ForeignKey(Districts)
