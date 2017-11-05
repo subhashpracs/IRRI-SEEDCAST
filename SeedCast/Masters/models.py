@@ -158,11 +158,10 @@ class STRVCategory(models.Model):
         verbose_name_plural = _('STRV Category')
 
     def __str__(self):
-        return self.category_short_code + '-' + self.category_name
+        return self.category_short_code
 
 class STRVVariety(models.Model):
-    category_name = models.ForeignKey(STRVCategory)
-    variety_name = models.CharField(max_length=255, primary_key=True)
+    variety_name = models.CharField(max_length=255)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)
     duration_in_days = models.CharField(max_length=20)
@@ -171,6 +170,7 @@ class STRVVariety(models.Model):
     grain_type = models.CharField(max_length=255)
     yield_in_tonne = models.CharField(max_length=20)
     yield_advantage = models.CharField(max_length=50)
+    category_name = models.ForeignKey(STRVCategory)
 
     #Meta Class
     class Meta:
