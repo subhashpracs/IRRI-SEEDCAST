@@ -87,7 +87,7 @@ class MobnumList(APIView):
         if serializer.is_valid():
             serializer.save()
             #Getting Dealer objects
-            dealer = Dealer_Registration.objects.all()
+            dealer = list(Dealer_Registration.objects.all())
             serializer2 = DealerSerializer(dealer, many=True)
             print(dealer)
             print("Serializer 2:" + serializer2)
@@ -298,7 +298,7 @@ class VAWDemandList(APIView):
 
     def get(self, request, format=None):
         vawdemand = VAWDemand.objects.all()
-        vawdemand = VAWDemandSerializer(vawdemand, many=True)
+        serializer = VAWDemandSerializer(vawdemand, many=True)
         return Response(serializer.data)
 
     @csrf_exempt

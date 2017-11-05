@@ -71,28 +71,37 @@ class Villages(models.Model):
 
 
 
+class SPO(models.Model):
+    spo = models.CharField(max_length=255, primary_key=True)
+
+    class Meta:
+        verbose_name = 'SPO'
+
+    def __str__(self):
+        return self.spo
+
+
+
+
+
+
 class Dealer_Registration(models.Model):
-    shop_name = models.CharField(max_length=255)
-    licence_num = models.CharField(max_length=255)
+    shop_name = models.CharField(max_length=255, blank=True)
+    license_num = models.CharField(max_length=255, blank=True)
     company_types_list = (
         ('private', 'PRIVATE'),
         ('pacs', 'PACS'),
     )
     company_type = models.CharField(max_length=7, choices=company_types_list)
     dealer_name = models.CharField(max_length=255)
-    contact_num = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(10)])
-    address = models.TextField(max_length=255)
+    contact_num = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(10)], null=True)
+    address = models.TextField(max_length=255, blank=True)
     state_name = models.ForeignKey(States)
     dist_name = models.ForeignKey(Districts)
     block_name = models.ForeignKey(Blocks)
-    spo_list = (
-        ('spo1', 'SPO 1'),
-        ('spo2', 'SPO 2'),
-        ('spo3', 'SPO 3'),
-    )
-    dealer_spo = models.CharField(max_length=5, choices= spo_list)
+    dealer_spo = models.ForeignKey(SPO)
     date = models.DateTimeField(default= datetime.now())
-    dealer_pincode = models.CharField(max_length=6, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(6)])
+    dealer_pincode = models.CharField(max_length=6, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(6)], blank=True)
 
     #Meta CLASS
     class Meta:
@@ -244,6 +253,4 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
