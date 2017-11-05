@@ -147,7 +147,7 @@ class STRVCategory(models.Model):
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
 
-    category_name = models.CharField(max_length=255)
+    category_name = models.CharField(max_length=255, primary_key=True)
     category_short_code = models.CharField(max_length=255)
     category_description = models.CharField(max_length=650)
     image = models.ImageField(upload_to="static/imgs/uploaded/category")
@@ -161,6 +161,7 @@ class STRVCategory(models.Model):
         return self.category_short_code + '-' + self.category_name
 
 class STRVVariety(models.Model):
+    category_name = models.ForeignKey(STRVCategory)
     variety_name = models.CharField(max_length=255, primary_key=True)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)

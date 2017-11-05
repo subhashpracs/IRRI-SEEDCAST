@@ -26,8 +26,8 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Masters/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+            <state relative-caret-position="324">
+              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -38,8 +38,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Masters/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="172" column="0" lean-forward="true" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+            <state relative-caret-position="468">
+              <caret line="173" column="0" lean-forward="true" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -115,19 +115,19 @@
         <option value="$PROJECT_DIR$/SeedCast/views.py" />
         <option value="$PROJECT_DIR$/SeedCast/urls.py" />
         <option value="$PROJECT_DIR$/Masters/urls.py" />
-        <option value="$PROJECT_DIR$/Masters/admin.py" />
         <option value="$PROJECT_DIR$/SeedCast/settings.py" />
         <option value="$PROJECT_DIR$/Masters/serializers.py" />
         <option value="$PROJECT_DIR$/Masters/views.py" />
         <option value="$PROJECT_DIR$/Masters/models.py" />
+        <option value="$PROJECT_DIR$/Masters/admin.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="8" />
-    <option name="y" value="421" />
-    <option name="width" value="1272" />
-    <option name="height" value="539" />
+    <option name="x" value="299" />
+    <option name="y" value="614" />
+    <option name="width" value="1270" />
+    <option name="height" value="531" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -221,7 +221,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-11" width="1282" height="1036" extended-state="7" />
+    <frame x="0" y="-4" width="1280" height="1028" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2617504" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -493,8 +493,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Masters/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="146" column="0" lean-forward="true" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+        <state relative-caret-position="324">
+          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
@@ -503,8 +503,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Masters/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="172" column="0" lean-forward="true" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
+        <state relative-caret-position="468">
+          <caret line="173" column="0" lean-forward="true" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
