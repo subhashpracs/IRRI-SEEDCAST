@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^villages/$', views.VillagesList.as_view()),
     url(r'^stocks/$', views.StockList.as_view()),
     url(r'^vaw_demand/$', views.VAWDemandList.as_view()),
+    url(r'^strv_category/(?P<pk>[0-9]+)/$', views.STRVCategoryDetail.as_view()),
+    url(r'^strv_variety/(?P<pk>[0-9]+)/$', views.STRVVarietyDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

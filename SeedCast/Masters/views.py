@@ -85,12 +85,37 @@ class STRVCategoryList(APIView):
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class STRVCategoryDetail(APIView):
+    """
+    Retrieve, update or delete a user instance.
+    """
+
+    def get_object(self, pk):
+        try:
+            return STRVCategory.objects.get(pk=pk)
+        except STRVCategory.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        category = self.get_object(pk)
+        category = STRVCategorySerializer(category)
+        return Response(category.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializer = STRVCategorySerializer(user, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        category = self.get_object(pk)
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 #STRV Variety Model view
-# class STRVVarietyList(generics.ListCreateAPIView):
-#     queryset = STRVVariety.objects.all()
-#     serializer_class = STRVVarietySerializer
 class STRVVarietyList(APIView):
 
     def get(self, request, format=None):
@@ -111,10 +136,37 @@ class STRVVarietyList(APIView):
         variety.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class STRVVarietyDetail(APIView):
+    """
+    Retrieve, update or delete a user instance.
+    """
+
+    def get_object(self, pk):
+        try:
+            return STRVVariety.objects.get(pk=pk)
+        except STRVVariety.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        category = self.get_object(pk)
+        category = STRVVarietySerializer(category)
+        return Response(category.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializer = STRVVarietySerializer(user, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        variety = self.get_object(pk)
+        variety.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 #Mobile numbers model
-
 class MobnumList(APIView):
 
     def get(self, request, format=None):

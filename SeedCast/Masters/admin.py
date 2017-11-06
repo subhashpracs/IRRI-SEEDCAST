@@ -14,33 +14,11 @@ admin.site.site_header = 'SeedCast'
 
 admin.site.site_title = 'IRRI-SeedCast'
 
-
-# Register your models here.
-
-# admin.site.register(AAO_Registration)
-
-# admin.site.register(VAW_Registration)
-
-# admin.site.register(STRVCategory)
-
-
-# admin.site.register(STRVVariety)
-
 admin.site.register(Mobnum)
 
 
 
 admin.site.register(States)
-
-admin.site.register(Districts)
-
-#admin.site.register(Blocks)
-
-#admin.site.register(Panchayats)
-
-#admin.site.register(Villages)
-
-
 
 
 #Dealer Registration
@@ -55,9 +33,9 @@ class DealerResource(resources.ModelResource):
 
 # Exporting via List Filters...
 class DealerAdmin(ImportExportActionModelAdmin):
-     list_display = ('shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
+     list_display = ('id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
      search_fields = ('shop_name', 'dealer_name',)
-     list_per_page = 6
+     list_per_page = 10
      resource_class = DealerResource
      # inlines = [DealerInline]
 
@@ -76,7 +54,7 @@ class VAWResource(resources.ModelResource):
 
 
 class VAWAdmin(ImportExportActionModelAdmin):
-    list_display = ('VAW_name', 'VAW_contact_number', 'state_name', 'dist_name', 'block_name', 'panchayat_name',)
+    list_display = ('id', 'VAW_name', 'VAW_contact_number', 'state_name', 'dist_name', 'block_name', 'panchayat_name',)
     search_fields = ('VAW_contact_number', )
     resource_class = VAWResource
 
@@ -132,9 +110,6 @@ class STRVVarietyAdmin(ModelAdmin):
     category_name_get.admin_order_field = 'category'
     category_name_get.short_description = 'Category'
 
-
-
-
 admin.site.register(STRVVariety, STRVVarietyAdmin)
 
 
@@ -152,6 +127,32 @@ admin.site.register(Stock)
 
 admin.site.register(SPO)
 
+
+
+#Districts
+class DistrictsResource(resources.ModelResource):
+    class Meta:
+        model = Districts
+        exclude = ('id',)
+        import_id_fields = ('state_name', 'dist_name')
+
+class DistrictsAdmin(ImportExportActionModelAdmin):
+    list_display = ('get_state', 'dist_name',)
+    search_fields = ('dist_name',)
+    list_filter = ('dist_name',)
+    list_per_page = 10
+    resource_class = DistrictsResource
+
+
+    def get_state(self,obj):
+        return obj.state_name.state_name
+    get_state.admin_order_field = 'state'
+    get_state.short_description = 'State'
+
+admin.site.register(Districts, DistrictsAdmin)
+
+
+
 #Blocks
 class BlocksResource(resources.ModelResource):
     class Meta:
@@ -163,7 +164,7 @@ class BlocksAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state', 'get_district', 'block_name',)
     search_fields = ('block_name',)
     list_filter = ('block_name',)
-    list_per_page = 5
+    list_per_page = 10
     resource_class = BlocksResource
 
 
@@ -190,7 +191,8 @@ class PanchayatsResource(resources.ModelResource):
 
 class PanchayatsAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state_name', 'get_district_name', 'get_block_name', 'panchayat_name',)
-    search_fields = ('block_name',)
+    search_fields = ('panchayat_name',)
+    list_per_page = 15
     resource_class = PanchayatsResource
 
     def get_state_name(self, obj):
@@ -242,8 +244,8 @@ class VillagesAdmin(ImportExportActionModelAdmin):
 
     def get_panchayat_name(self, obj):
         return obj.panchayat_name.panchayat_name
-    get_panchayat_name.admin_order_field = 'village'
-    get_panchayat_name.short_description = 'Village'
+    get_panchayat_name.admin_order_field = 'panchayat'
+    get_panchayat_name.short_description = 'Panchayat'
 
 
 admin.site.register(Villages, VillagesAdmin)

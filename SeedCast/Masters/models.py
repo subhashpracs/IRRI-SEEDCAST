@@ -149,7 +149,7 @@ class STRVCategory(models.Model):
 
     category_name = models.CharField(max_length=255, primary_key=True)
     category_short_code = models.CharField(max_length=255)
-    category_description = models.CharField(max_length=650)
+    category_description = models.TextField(max_length=650)
     image = models.ImageField(upload_to="static/imgs/uploaded/category")
 
     #Meta Class
@@ -161,7 +161,8 @@ class STRVCategory(models.Model):
         return self.category_short_code
 
 class STRVVariety(models.Model):
-    variety_name = models.CharField(max_length=255)
+    category_name = models.ForeignKey(STRVCategory)
+    variety_name = models.CharField(max_length=255, primary_key=True)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)
     duration_in_days = models.CharField(max_length=20)
@@ -170,7 +171,6 @@ class STRVVariety(models.Model):
     grain_type = models.CharField(max_length=255)
     yield_in_tonne = models.CharField(max_length=20)
     yield_advantage = models.CharField(max_length=50)
-    category_name = models.ForeignKey(STRVCategory)
 
     #Meta Class
     class Meta:
