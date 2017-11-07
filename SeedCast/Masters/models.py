@@ -147,7 +147,8 @@ class STRVCategory(models.Model):
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
 
-    category_name = models.CharField(max_length=255, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    category_name = models.CharField(max_length=255)
     category_short_code = models.CharField(max_length=255)
     category_description = models.TextField(max_length=650)
     image = models.ImageField(upload_to="static/imgs/uploaded/category")
@@ -161,8 +162,9 @@ class STRVCategory(models.Model):
         return self.category_short_code
 
 class STRVVariety(models.Model):
+    id = models.AutoField(primary_key=True)
     category_name = models.ForeignKey(STRVCategory)
-    variety_name = models.CharField(max_length=255, primary_key=True)
+    variety_name = models.CharField(max_length=255)
     variety_code = models.CharField(max_length=255)
     description = models.TextField(max_length=650)
     duration_in_days = models.CharField(max_length=20)

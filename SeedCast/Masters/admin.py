@@ -84,9 +84,10 @@ class STRVCatResource(resources.ModelResource):
         fields = ('id', 'category_name', 'category_short_code', 'category_description', 'image')
 
 class STRVCatAdmin(ModelAdmin):
-    list_display = ('category_name', 'category_short_code', 'category_description', 'image')
+    list_display = ('id', 'category_name', 'category_short_code', 'category_description', 'image')
     search_fields = ('category_short_code',)
     resource_class = STRVCatResource
+    list_display_links = ('category_name',)
 
 admin.site.register(STRVCategory, STRVCatAdmin)
 
@@ -101,7 +102,7 @@ class STRVVarietyResource(resources.ModelResource):
         fields = ('id', 'category_name_get', 'variety_name', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
 
 class STRVVarietyAdmin(ModelAdmin):
-    list_display = ('category_name_get', 'variety_name', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
+    list_display = ('id', 'category_name_get', 'variety_name', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
     search_fields = ('variety_name', 'variety_code',)
     resource_class = STRVVarietyResource
 
