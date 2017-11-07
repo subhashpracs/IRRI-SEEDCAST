@@ -4,7 +4,7 @@ from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STR
 class DealerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dealer_Registration
-        fields = '__all__'
+        fields = ('id','shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
 
 class AAOSerializer(serializers.ModelSerializer):
     class Meta:

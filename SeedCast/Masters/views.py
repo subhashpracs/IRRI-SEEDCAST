@@ -172,13 +172,11 @@ class MobnumList(APIView):
         if serializer.is_valid():
             serializer.save()
             #Getting Dealer objects
-            dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num').filter(contact_num=serializer)
-            # serializer2 = DealerSerializer(dealer, many=True)
-            # print(dealer)
-            # print("Serializer 2:" + serializer2)
-            # if serializer in dealer:
-            #     return Response(serializer2.data, status=status.HTTP_200_OK)
-            return Response(dealer.data, status=status.HTTP_200_OK)
+            dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num', 'contact_num').filter(contact_num=serializer)
+            print(dealer)
+            if serializer in dealer:
+                print(serializer)
+                return Response(dealer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
