@@ -170,17 +170,19 @@ class MobnumList(APIView):
     def post(self, request, format=None):
         serializer = MobnumSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            #serializer.save()
+            mob_posted = serializer.data['mobnum']
             #Getting Dealer objects
-            # dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num', 'contact_num').filter(contact_num=serializer)
-            dealer = Dealer_Registration.objects.filter(contact_num=serializer.data).values_list('id', )
-
-            print(dealer)
-            if serializer in dealer:
-                print(serializer)
-                return Response(dealer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+            dealer = Dealer_Registration.objects.values('id', 'license_num', 'dealer_name', 'contact_num').filter(contact_num=mob_posted)
+            queryset = Dealer_Registration.objects.all()
+            for obj in queryset:
+                if obj.contact_num == mob_posted:
+                    print(obj.contact_num)
+                    print("Matched...mobile number found")
+                    dealer_list = ( obj.id, obj.dealer_name, obj.license_num, obj.contact_num )
+                    return Response(dealer_list, status=status.HTTP_200_OK)
+                else:
+                    return Response('Mobile number not found...', status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
