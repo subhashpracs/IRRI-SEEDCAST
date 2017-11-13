@@ -241,10 +241,8 @@ class MobnumList(APIView):
     def post(self, request, format=None):
         serializer = MobnumSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            #serializer.save()
             mob_posted = serializer.data['mobnum']
-            #Getting Dealer objects
-            #dealer = Dealer_Registration.objects.values('id', 'license_num', 'dealer_name', 'contact_num').filter(contact_num=mob_posted)
             queryset = Dealer_Registration.objects.all()
             dealers = []
             mobile_numbers_list = []
@@ -252,17 +250,11 @@ class MobnumList(APIView):
                 print("All Records..." + obj.contact_num)
                 mob_num = obj.contact_num
                 mobile_numbers_list.append(mob_num)
-                dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
-                dealers.append(tuple(dealer_list, ))
+                # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
+                dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
+                dealers.append(dealer_list,)
                 print("Mobile numbers:::"+ str(mobile_numbers_list))
-                # if obj.contact_num == mob_posted:
-                #     print(obj.contact_num)
-                #     print("Matched...mobile number found")
-                #     dealer_list = ( obj.id, obj.dealer_name, obj.license_num, obj.contact_num )
-                #     return Response(dealer_list, status=status.HTTP_200_OK)
-                # else:
-                #     print(mob_posted)
-                #     return Response('Mobile number not found...', status=status.HTTP_204_NO_CONTENT)
+
             if mob_posted in mobile_numbers_list:
                 mob_index = mobile_numbers_list.index(mob_posted)
                 print("Mobile number matched...")
@@ -271,14 +263,6 @@ class MobnumList(APIView):
                 print("Mobile number not found...")
                 return Response("No Data found for this Mobile Number...", status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#         # dealer = Dealer_Registration.objects.filter(contact_num=serializer.data).values_list('id', )
-# print("Posted data:" + str(mob_posted))
-# print("DealerData:" + str(dealer))
-# # if str(mob_posted) in dealer:
-# #     print(serializer.data + ' is in list...SB!!!')
-# #     return Response(dealer, status=status.HTTP_200_OK)
-
 
     def delete(self, request, pk, format=None):
         mobnum = self.get_object(pk)
