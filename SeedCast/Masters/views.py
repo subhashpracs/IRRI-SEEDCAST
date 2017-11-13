@@ -252,7 +252,7 @@ class MobnumList(APIView):
                 mobile_numbers_list.append(mob_num)
                 # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
                 #dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
-                dealer_list = { "dealer_name" : obj.dealer_name, "license" : obj.license_num, "block" : obj.block_name, "contact" : obj.contact_num }
+                dealer_list = { "dealer_name" : obj.dealer_name, "license" : obj.license_num, "contact" : obj.contact_num }
                 dealers.append(dealer_list,)
                 print("Mobile numbers:::"+ str(mobile_numbers_list))
 
