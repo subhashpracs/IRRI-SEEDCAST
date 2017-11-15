@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^strv_category/(?P<pk>[0-9]+)/$', views.STRVCategoryDetail.as_view()),
     url(r'^strv_variety/(?P<pk>[0-9]+)/$', views.STRVVarietyDetail.as_view()),
     url(r'^variety/(?P<pk>[0-9]+)/$', views.Variety.as_view()),
+    url(r'^vaw_list_mob/', views.VAWMobileList.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

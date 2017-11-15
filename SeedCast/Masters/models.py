@@ -194,6 +194,19 @@ class Mobnum(models.Model):
     def __str__(self):
         return str(self.mobnum)
 
+
+class Vawmobnum(models.Model):
+    vaw_num = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(10)])
+
+    class Meta:
+        verbose_name = _('VawMobile')
+        verbose_name_plural = _('VawMobile Numbers')
+
+    def __str__(self):
+        return str(self.vaw_num)
+
+
+
 class VAWDemand(models.Model):
     village_name = models.ForeignKey(Villages)
     variety_name = models.ForeignKey(STRVVariety)
@@ -222,7 +235,7 @@ class DealerDemand(models.Model):
         return str(self.quantity)
 
 class Stock(models.Model):
-    variety_name = models.ForeignKey(STRVVariety, primary_key=True)
+    variety_name = models.ForeignKey(STRVVariety)
     available = models.PositiveIntegerField()
     date_wn_available = models.DateField()
 

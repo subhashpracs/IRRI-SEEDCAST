@@ -178,7 +178,7 @@ class BlocksAdmin(ImportExportActionModelAdmin):
     def get_district(self, obj):
         return obj.dist_name.dist_name
     get_district.admin_order_field = 'district'
-    get_district.short_description = 'Distrirct'
+    get_district.short_description = 'District'
 
 admin.site.register(Blocks, BlocksAdmin)
 

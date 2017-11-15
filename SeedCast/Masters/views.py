@@ -1,3 +1,4 @@
+from django.core.serializers import json
 from django.db.migrations import serializer
 from django.shortcuts import render
 
@@ -7,8 +8,8 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO
-from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum
+from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
@@ -253,6 +254,7 @@ class MobnumList(APIView):
                 # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
                 #dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
                 dealer_list = { "dealer_name" : obj.dealer_name, "license" : obj.license_num, "contact" : obj.contact_num }
+                # dealer_list_new = json.dumps(dealer_list)
                 dealers.append(dealer_list,)
                 print("Mobile numbers:::"+ str(mobile_numbers_list))
 
@@ -262,7 +264,63 @@ class MobnumList(APIView):
                 return Response(dealers[mob_index], status=status.HTTP_200_OK)
             else:
                 print("Mobile number not found...")
-                return Response("No Data found for this Mobile Number...", status=status.HTTP_204_NO_CONTENT)
+                no_dealer_data = { "error_msg" : "Not registered..." }
+                return Response(no_dealer_data, status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        mobnum = self.get_object(pk)
+        mobnum.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+#VAW Mobile numbers...
+class VAWMobileList(APIView):
+
+    # def get(self, request, format=None):
+    #     mob = Mobnum.objects.all()
+    #     serializer = MobnumSerializer(mob, many=True)
+    #     return Response(serializer.data)
+
+
+    # def get(self, request, format=None):
+    #     model = Dealer_Registration
+    #     dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num', 'contact_num').filter(contact_num=6566545434)
+    #     mob = Mobnum.objects.filter(mobnum=6565445346)
+    #     serializer = MobnumSerializer(mob, many=True)
+    #     print(serializer.data)
+    #     print('\nDealer:' + str(dealer))
+    #     return Response(serializer.data)
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = VAWMobSerializer(data=request.data)
+        if serializer.is_valid():
+            # serializer.save()
+            mob_posted = serializer.data['vaw_num']
+            queryset = VAW_Registration.objects.all()
+            vaws = []
+            mobile_numbers_list = []
+            for obj in queryset:
+                print("All Records..." + obj.VAW_contact_number)
+                mob_num = obj.VAW_contact_number
+                mobile_numbers_list.append(mob_num)
+                # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
+                # dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
+                vaw_list = {"vaw_name": obj.VAW_name, "contact": obj.VAW_contact_number}
+                #dealer_list_new = json.dumps(dealer_list)
+                vaws.append(vaw_list, )
+                print("Mobile numbers:::" + str(mobile_numbers_list))
+
+            if mob_posted in mobile_numbers_list:
+                mob_index = mobile_numbers_list.index(mob_posted)
+                print("Mobile number matched...")
+                return Response(vaws[mob_index], status=status.HTTP_200_OK)
+            else:
+                print("Mobile number not found...")
+                no_vaw_data = { "error_message" : "No VAW for this number..." }
+                return Response(no_vaw_data, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
@@ -359,18 +417,16 @@ class FeedbackList(APIView):
 class StatesList(APIView):
 
     def get(self, request, format=None):
-        state = Mobnum.objects.all()
+        state = States.objects.all()
         serializer = StatesSerializer(state, many=True)
         return Response(serializer.data)
 
     @csrf_exempt
     def post(self, request, format=None):
         serializer = StatesSerializer(data=request.data)
-        dealers = DealerSerializer(ddata = request.data)
         if serializer.is_valid():
             # serializer.save()
-            if serializer in dealers:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
