@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots
 
 class DealerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -92,5 +92,26 @@ class VAWMobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vawmobnum
         fields = '__all__'
+
+class VarietynewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Varietynew
+        fields = '__all__'
+
+
+
+class ViewDealerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ViewDealerlist
+        fields = '__all__'
+
+
+
+
+class PilotPlotsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pilotplots
+        fields = '__all__'
+
 
 

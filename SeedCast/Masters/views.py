@@ -8,8 +8,8 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum
-from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots
+from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PilotPlotsSerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
@@ -31,16 +31,10 @@ class DealerList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        dealer = self.get_object(pk)
-        dealer.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 class DealerDetail(APIView):
     """
     Retrieve, update or delete a user instance.
     """
-
     def get_object(self, pk):
         try:
             return Dealer_Registration.objects.get(pk=pk)
@@ -49,7 +43,7 @@ class DealerDetail(APIView):
 
     def get(self, request, pk, format=None):
         dealer = self.get_object(pk)
-        dealer = STRVCategorySerializer(dealer)
+        dealer = DealerSerializer(dealer)
         return Response(dealer.data)
 
     def put(self, request, pk, format=None):
@@ -75,9 +69,26 @@ class VAWList(generics.ListCreateAPIView):
     queryset = VAW_Registration.objects.all()
     serializer_class = VAWSerializer
 
-class VAWDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = VAW_Registration.objects.all()
-    serializer_class = VAWSerializer
+class VAWDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return VAW_Registration.objects.get(pk=pk)
+        except VAW_Registration.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        vaw = self.get_object(pk)
+        vaw = VAWSerializer(vaw)
+        return Response(vaw.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializer = VAWSerializer(user, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
@@ -96,11 +107,6 @@ class STRVCategoryList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        category = self.get_object(pk)
-        category.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class STRVCategoryDetail(APIView):
     """
@@ -126,12 +132,6 @@ class STRVCategoryDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        category = self.get_object(pk)
-        category.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 #STRV Variety Model view
 class STRVVarietyList(APIView):
 
@@ -154,19 +154,39 @@ class STRVVarietyList(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        variety = self.get_object(pk)
-        variety.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 #STRVVariety list as category under...
-class STRVVarietyNew(generics.ListAPIView):
-    def get_queryset(self):
-        category_name = STRVCategory.objects.all()
-        variety = STRVVariety.objects.filter(category_name=category_name)
-        serializer_class = STRVVarietySerializer(variety, many=True)
-        return Response(serializer_class.data)
+class STRVVarietyNew(APIView):
+    # def get(self,request):
+    #     category_name = STRVCategory.objects.all()
+    #     variety = STRVVariety.objects.filter(category_name=category_name)
+    #     serializer_class = STRVVarietySerializer(variety, many=True)
+    #     return Response(serializer_class.data)
 
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = VarietynewSerializer(data=request.data)
+        if serializer.is_valid():
+            print("Serializer:" + str(serializer.data))
+            posted_category = serializer.data['category']
+            queryset = STRVVariety.objects.filter(category_name=posted_category)
+            variety_list = []
+            for obj in queryset:
+                variety = obj.variety_name
+                varietycode = obj.variety_code
+                descriptionn = obj.description
+                duration = obj.duration_in_days
+                land = obj.suitable_land_type
+                height = obj.plant_height
+                grain = obj.grain_type
+                yieldin = obj.yield_in_tonne
+                advantage = obj.yield_advantage
+                category = obj.category_name
+                variety_dic = { "variety_name" : variety, "variety_code" : varietycode, "description" : descriptionn, "duration_in_days" : duration, "suitable_land_type" : land, "plant_height" : height, "grain_type" : grain, "yield_in_tonne" : yieldin, "yield_advantage" : advantage }
+                variety_list.append(variety_dic,)
+
+            print("Variety List:" + str(variety_list))
+            return Response(variety_list, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class STRVVarietyDetail(APIView):
     """
@@ -192,50 +212,12 @@ class STRVVarietyDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        variety = self.get_object(pk)
-        variety.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-class Variety(APIView):
-    """
-    Retrieve, update or delete a user instance.
-    """
-
-    def for_key(self, obj):
-        return obj.category_name.category_name
-
-    def get_object(self, for_key):
-        try:
-            return STRVVariety.objects.get(for_key)
-        except STRVVariety.DoesNotExist:
-            raise Http404
-
-    def get(self, request, format=None):
-        def for_key(self, obj):
-            return obj.category_name.category_name
-        category = self.get_object(for_key)
-        category = STRVVarietySerializer(category)
-        return Response(category.data)
-
-
-
 #Mobile numbers model
 class MobnumList(APIView):
 
     # def get(self, request, format=None):
     #     mob = Mobnum.objects.all()
     #     serializer = MobnumSerializer(mob, many=True)
-    #     return Response(serializer.data)
-
-
-    # def get(self, request, format=None):
-    #     model = Dealer_Registration
-    #     dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num', 'contact_num').filter(contact_num=6566545434)
-    #     mob = Mobnum.objects.filter(mobnum=6565445346)
-    #     serializer = MobnumSerializer(mob, many=True)
-    #     print(serializer.data)
-    #     print('\nDealer:' + str(dealer))
     #     return Response(serializer.data)
 
     @csrf_exempt
@@ -248,15 +230,11 @@ class MobnumList(APIView):
             dealers = []
             mobile_numbers_list = []
             for obj in queryset:
-                print("All Records..." + obj.contact_num)
                 mob_num = obj.contact_num
                 mobile_numbers_list.append(mob_num)
-                # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
-                #dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
-                dealer_list = { "dealer_name" : obj.dealer_name, "license" : obj.license_num, "contact" : obj.contact_num }
-                # dealer_list_new = json.dumps(dealer_list)
+                #dealer_list = { "dealer_name" : obj.dealer_name, "license" : obj.license_num, "contact" : obj.contact_num, "block" : obj.block_name }
+                dealer_list = { "id" : obj.id }
                 dealers.append(dealer_list,)
-                print("Mobile numbers:::"+ str(mobile_numbers_list))
 
             if mob_posted in mobile_numbers_list:
                 mob_index = mobile_numbers_list.index(mob_posted)
@@ -268,10 +246,46 @@ class MobnumList(APIView):
                 return Response(no_dealer_data, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        mobnum = self.get_object(pk)
-        mobnum.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ViewDealer(APIView):
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = ViewDealerSerializer(data=request.data)
+        if serializer.is_valid():
+            dist_posted = serializer.data['district']
+            queryset = Dealer_Registration.objects.filter(dist_name=dist_posted)
+            dealer_dist_wise = []
+            for obj in queryset:
+                dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num }
+                dealer_dist_wise.append(dealer_list,)
+
+            return Response(dealer_dist_wise, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Plots(APIView):
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = PilotPlotsSerializer(data=request.data)
+        if serializer.is_valid():
+            dist_posted = serializer.data['dist_name']
+            block_posted = serializer.data['block_name']
+            #panchayat_posted = serializer.data['panchayat_name']
+            queryset = Dealer_Registration.objects.filter(dist_name=dist_posted,block_name=block_posted)
+            dealer_list_dbp_wise = []
+            for obj in queryset:
+                dealer_list = { "shop" : obj.shop_name, "dealer" : obj.dealer_name }
+                dealer_list_dbp_wise.append(dealer_list,)
+
+            print("Dealer List:" + str(dealer_list_dbp_wise))
+
+            return Response(dealer_list_dbp_wise, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
@@ -282,36 +296,19 @@ class VAWMobileList(APIView):
     #     mob = Mobnum.objects.all()
     #     serializer = MobnumSerializer(mob, many=True)
     #     return Response(serializer.data)
-
-
-    # def get(self, request, format=None):
-    #     model = Dealer_Registration
-    #     dealer = Dealer_Registration.objects.values('id', 'dealer_name', 'license_num', 'contact_num').filter(contact_num=6566545434)
-    #     mob = Mobnum.objects.filter(mobnum=6565445346)
-    #     serializer = MobnumSerializer(mob, many=True)
-    #     print(serializer.data)
-    #     print('\nDealer:' + str(dealer))
-    #     return Response(serializer.data)
-
     @csrf_exempt
     def post(self, request, format=None):
         serializer = VAWMobSerializer(data=request.data)
         if serializer.is_valid():
-            # serializer.save()
             mob_posted = serializer.data['vaw_num']
             queryset = VAW_Registration.objects.all()
             vaws = []
             mobile_numbers_list = []
             for obj in queryset:
-                print("All Records..." + obj.VAW_contact_number)
                 mob_num = obj.VAW_contact_number
                 mobile_numbers_list.append(mob_num)
-                # dealer_list = [obj.id, obj.license_num, obj.dealer_name, obj.contact_num, ]
-                # dealer_list = { "id" : obj.id, "license" : obj.license_num, "dealer" : obj.dealer_name, "contact" : obj.contact_num }
-                vaw_list = {"vaw_name": obj.VAW_name, "contact": obj.VAW_contact_number}
-                #dealer_list_new = json.dumps(dealer_list)
+                vaw_list = { "id" : obj.id }
                 vaws.append(vaw_list, )
-                print("Mobile numbers:::" + str(mobile_numbers_list))
 
             if mob_posted in mobile_numbers_list:
                 mob_index = mobile_numbers_list.index(mob_posted)
@@ -322,12 +319,6 @@ class VAWMobileList(APIView):
                 no_vaw_data = { "error_message" : "No VAW for this number..." }
                 return Response(no_vaw_data, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        mobnum = self.get_object(pk)
-        mobnum.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 #Chart View example...
 class BarView(HighChartsBarView):
@@ -364,12 +355,6 @@ class DealerDemandList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        demand = self.get_object(pk)
-        demand.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 #Stock available POST url
 class StockList(APIView):
 
@@ -387,11 +372,6 @@ class StockList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        demand = self.get_object(pk)
-        demand.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 #Feedback post url
 class FeedbackList(APIView):
@@ -408,12 +388,6 @@ class FeedbackList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-    def delete(self, request, pk, format=None):
-        feedback = self.get_object(pk)
-        feedback.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 class StatesList(APIView):
 
     def get(self, request, format=None):
@@ -428,11 +402,6 @@ class StatesList(APIView):
             # serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        states = self.get_object(pk)
-        states.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class DistrictsList(APIView):
@@ -450,12 +419,6 @@ class DistrictsList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        dist = self.get_object(pk)
-        dist.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 class BlocksList(APIView):
 
     def get(self, request, format=None):
@@ -470,12 +433,6 @@ class BlocksList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        blocks = self.get_object(pk)
-        blocks.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 class PanchayatsList(APIView):
 
@@ -492,12 +449,6 @@ class PanchayatsList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        panchayats = self.get_object(pk)
-        panchayats.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 class VillagesList(APIView):
 
     def get(self, request, format=None):
@@ -512,12 +463,6 @@ class VillagesList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        villages = self.get_object(pk)
-        villages.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
 #SPOs
 class SPOList(generics.ListCreateAPIView):
     queryset = SPO.objects.all()
@@ -538,10 +483,3 @@ class VAWDemandList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        vaw = self.get_object(pk)
-        vaw.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-

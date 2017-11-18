@@ -14,10 +14,6 @@ admin.site.site_header = 'SeedCast'
 
 admin.site.site_title = 'IRRI-SeedCast'
 
-admin.site.register(Mobnum)
-
-
-
 admin.site.register(States)
 
 

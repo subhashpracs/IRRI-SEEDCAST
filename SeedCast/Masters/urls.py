@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^dealer_list/$', views.DealerList.as_view()),
     url(r'^dealer_list/(?P<pk>[0-9]+)/$', views.DealerDetail.as_view()),
     url(r'^vaw_list/$', views.VAWList.as_view()),
+    url(r'^vaw_list/(?P<pk>[0-9]+)/$', views.VAWDetail.as_view()),
     url(r'^strv_category/$', views.STRVCategoryList.as_view()),
     url(r'^strv_variety/$', views.STRVVarietyList.as_view()),
     url(r'^mob/', views.MobnumList.as_view()),
@@ -23,8 +24,11 @@ urlpatterns = [
     url(r'^vaw_demand/$', views.VAWDemandList.as_view()),
     url(r'^strv_category/(?P<pk>[0-9]+)/$', views.STRVCategoryDetail.as_view()),
     url(r'^strv_variety/(?P<pk>[0-9]+)/$', views.STRVVarietyDetail.as_view()),
-    url(r'^variety/(?P<pk>[0-9]+)/$', views.Variety.as_view()),
+    # url(r'^variety/(?P<pk>[0-9]+)/$', views.Variety.as_view()),
     url(r'^vaw_list_mob/', views.VAWMobileList.as_view()),
+    url(r'^varietynew/', views.STRVVarietyNew.as_view()),
+    url(r'^view_dealer/', views.ViewDealer.as_view()),
+    url(r'plots/', views.Plots.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -205,6 +205,12 @@ class Vawmobnum(models.Model):
     def __str__(self):
         return str(self.vaw_num)
 
+class Varietynew(models.Model):
+    category = models.IntegerField()
+
+
+    def __str__(self):
+        return str(self.category)
 
 
 class VAWDemand(models.Model):
@@ -249,13 +255,13 @@ class Stock(models.Model):
 class Pilotplots(models.Model):
     dist_name = models.ForeignKey(Districts)
     block_name = models.ForeignKey(Blocks)
-    panchayat_name = models.ForeignKey(Panchayats)
+    #panchayat_name = models.ForeignKey(Panchayats)
 
     class Meta:
         verbose_name = 'Pilot Plots'
 
     def __str__(self):
-        return str(self.panchayat_name)
+        return str(self.dist_name)
 
 class Feedback(models.Model):
     name = models.CharField(max_length=255)
@@ -269,3 +275,9 @@ class Feedback(models.Model):
     def __str__(self):
         return self.name
 
+
+class ViewDealerlist(models.Model):
+    district = models.ForeignKey(Districts)
+
+    def __str__(self):
+        return str(self.district)
