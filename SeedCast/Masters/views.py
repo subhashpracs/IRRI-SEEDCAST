@@ -15,6 +15,40 @@ from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
 from rest_framework import status
 
+#Cairo charts...
+
+
+import pycha.bar
+import cairo
+
+class Example(APIView):
+
+    width, height = (500, 400)
+    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+
+
+
+    dataSet = (
+      ('dataSet 1', ((0, 1), (1, 3), (2, 2.5))),
+      ('dataSet 2', ((0, 2), (1, 4), (2, 3))),
+      ('dataSet 3', ((0, 5), (1, 1), (2, 0.5))),
+    )
+
+
+    options = {
+        'legend': {'hide': True},
+        'background': {'color': '#f0f0f0'},
+    }
+
+    chart = pycha.bar.VerticalBarChart(surface, options)
+    chart.addDataset(dataSet)
+    #chart.render()
+
+
+
+    surface.write_to_png('output.png')
+
+
 
 #Dealer's list
 class DealerList(APIView):
@@ -358,10 +392,10 @@ class DealerDemandList(APIView):
 #Stock available POST url
 class StockList(APIView):
 
-    # def get(self, request, format=None):
-    #     demand = Stock.objects.all()
-    #     serializer = StockSerializer(demand, many=True)
-    #     return Response(serializer.data)
+    def get(self, request, format=None):
+        demand = Stock.objects.all()
+        serializer = StockSerializer(demand, many=True)
+        return Response(serializer.data)
 
     @csrf_exempt
     def post(self, request, format=None):

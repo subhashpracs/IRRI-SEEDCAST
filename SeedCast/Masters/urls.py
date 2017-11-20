@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^varietynew/', views.STRVVarietyNew.as_view()),
     url(r'^view_dealer/', views.ViewDealer.as_view()),
     url(r'plots/', views.Plots.as_view()),
+    url(r'example/', views.Example.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

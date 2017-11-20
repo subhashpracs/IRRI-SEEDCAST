@@ -244,6 +244,8 @@ class Stock(models.Model):
     variety_name = models.ForeignKey(STRVVariety)
     available = models.PositiveIntegerField()
     date_wn_available = models.DateField()
+    check = models.BooleanField()
+
 
     class Meta:
         verbose_name = 'Stock'
