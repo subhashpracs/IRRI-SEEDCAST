@@ -15,38 +15,38 @@ from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
 from rest_framework import status
 
-#Cairo charts...
-
-
-import pycha.bar
-import cairo
-
-class Example(APIView):
-
-    width, height = (500, 400)
-    surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-
-
-
-    dataSet = (
-      ('dataSet 1', ((0, 1), (1, 3), (2, 2.5))),
-      ('dataSet 2', ((0, 2), (1, 4), (2, 3))),
-      ('dataSet 3', ((0, 5), (1, 1), (2, 0.5))),
-    )
-
-
-    options = {
-        'legend': {'hide': True},
-        'background': {'color': '#f0f0f0'},
-    }
-
-    chart = pycha.bar.VerticalBarChart(surface, options)
-    chart.addDataset(dataSet)
-    #chart.render()
-
-
-
-    surface.write_to_png('output.png')
+# #Cairo charts...
+#
+#
+# import pycha.bar
+# import cairo
+#
+# class Example(APIView):
+#
+#     width, height = (500, 400)
+#     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+#
+#
+#
+#     dataSet = (
+#       ('dataSet 1', ((0, 1), (1, 3), (2, 2.5))),
+#       ('dataSet 2', ((0, 2), (1, 4), (2, 3))),
+#       ('dataSet 3', ((0, 5), (1, 1), (2, 0.5))),
+#     )
+#
+#
+#     options = {
+#         'legend': {'hide': True},
+#         'background': {'color': '#f0f0f0'},
+#     }
+#
+#     chart = pycha.bar.VerticalBarChart(surface, options)
+#     chart.addDataset(dataSet)
+#     #chart.render()
+#
+#
+#
+#     surface.write_to_png('output.png')
 
 
 
@@ -290,12 +290,19 @@ class ViewDealer(APIView):
         if serializer.is_valid():
             dist_posted = serializer.data['district']
             queryset = Dealer_Registration.objects.filter(dist_name=dist_posted)
+            print("Length of queryset queried is:" + str(len(queryset)))
+            query_length = len(queryset)
             dealer_dist_wise = []
             for obj in queryset:
                 dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num }
                 dealer_dist_wise.append(dealer_list,)
 
-            return Response(dealer_dist_wise, status=status.HTTP_200_OK)
+
+            if query_length == 0:
+                return Response( { "error" : "No data found..." }, status=status.HTTP_204_NO_CONTENT)
+
+            else:
+                return Response(dealer_dist_wise, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
