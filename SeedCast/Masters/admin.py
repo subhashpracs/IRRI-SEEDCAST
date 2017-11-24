@@ -189,7 +189,7 @@ class PanchayatsResource(resources.ModelResource):
 class PanchayatsAdmin(ImportExportActionModelAdmin):
     list_display = ('get_state_name', 'get_district_name', 'get_block_name', 'panchayat_name',)
     search_fields = ('panchayat_name',)
-    list_per_page = 15
+    list_per_page = 1700
     resource_class = PanchayatsResource
 
     def get_state_name(self, obj):

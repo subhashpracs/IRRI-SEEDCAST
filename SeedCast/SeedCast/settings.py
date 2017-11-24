@@ -189,7 +189,7 @@ FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
 
 
-
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 
 #Django REST Framework
