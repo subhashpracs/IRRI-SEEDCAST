@@ -8,8 +8,8 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots
-from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PilotPlotsSerializer
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability
+from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PilotPlotsSerializer, STRAvailabilitySerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
@@ -524,3 +524,47 @@ class VAWDemandList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class STRVAvailability(APIView):
+
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = STRAvailabilitySerializer(data=request.data)
+        if serializer.is_valid():
+            print("Serializer data:" + str(serializer.data))
+            variety_posted = serializer.data['variety']
+            shop_from_stocks = serializer.data['shop']
+            dealer_details = Dealer_Registration.objects.filter(id=shop_from_stocks)
+            availability = Stock.objects.filter(variety_name=variety_posted)
+            dealer_list = {}
+            # print("Availability2 is: " + str(availability))
+            for obj2 in availability:
+                dealer_list['available_from'] = obj2.available
+                # print("Available is:" + str(availability2))
+            # availability2 = availability.available
+
+            print("Length of queryset queried is:" + str(len(dealer_details)))
+            query_length = len(dealer_details)
+            print("Dealer Details:" + str(dealer_details))
+            print("shop:" + str(shop_from_stocks))
+            dealer_stock_wise = []
+            for obj in dealer_details:
+                # dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num, "shop_name" : obj.shop_name }
+                dealer_list['dealer_name'] = obj.dealer_name
+                dealer_list['contact'] = obj.contact_num
+                dealer_list['shop_name'] = obj.shop_name
+                # dealer_list['available'] = availability2
+                dealer_stock_wise.append(dealer_list,)
+
+
+            if query_length == 0:
+                return Response( { "error" : "No data found..." }, status=status.HTTP_204_NO_CONTENT)
+
+            else:
+                return Response(dealer_stock_wise, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+

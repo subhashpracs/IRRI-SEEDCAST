@@ -241,6 +241,7 @@ class DealerDemand(models.Model):
         return str(self.quantity)
 
 class Stock(models.Model):
+    dealer_shop = models.ForeignKey(Dealer_Registration, db_column='Dealer_Registration_id')
     variety_name = models.ForeignKey(STRVVariety)
     available = models.PositiveIntegerField()
     date_wn_available = models.DateField()
@@ -283,3 +284,12 @@ class ViewDealerlist(models.Model):
 
     def __str__(self):
         return str(self.district)
+
+class STRAvailability(models.Model):
+    variety = models.ForeignKey(STRVVariety)
+    shop = models.ForeignKey(Dealer_Registration)
+
+    def __str__(self):
+        return str(self.variety)
+
+
