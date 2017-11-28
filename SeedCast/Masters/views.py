@@ -294,7 +294,7 @@ class ViewDealer(APIView):
             query_length = len(queryset)
             dealer_dist_wise = []
             for obj in queryset:
-                dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num }
+                dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num, "license" : obj.license_num }
                 dealer_dist_wise.append(dealer_list,)
 
 
@@ -537,7 +537,7 @@ class STRVAvailability(APIView):
             variety_posted = serializer.data['variety']
             shop_from_stocks = serializer.data['shop']
             dealer_details = Dealer_Registration.objects.filter(id=shop_from_stocks)
-            availability = Stock.objects.filter(variety_name=variety_posted)
+            availability = Stock.objects.filter(variety_name=variety_posted, dealer_shop=shop_from_stocks)
             dealer_list = {}
             # print("Availability2 is: " + str(availability))
             for obj2 in availability:
@@ -546,7 +546,7 @@ class STRVAvailability(APIView):
             # availability2 = availability.available
 
             print("Length of queryset queried is:" + str(len(dealer_details)))
-            query_length = len(dealer_details)
+            query_length = len(availability)
             print("Dealer Details:" + str(dealer_details))
             print("shop:" + str(shop_from_stocks))
             dealer_stock_wise = []
