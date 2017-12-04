@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import get_user_model
 import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +15,39 @@ from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
 from rest_framework import status
+from django.http import JsonResponse
+from django.views.generic import View
+
+
+
+
+User = get_user_model()
+
+class HomeView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'charts.html', {"customers": 10})
+
+def get_data(request, *args, **kwargs):
+    data = {
+        "sales": 100,
+        "customers": 10,
+    }
+    return JsonResponse(data)  # http response
+
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        qs_count = User.objects.all().count()
+        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        default_items = [qs_count, 23, 2, 3, 12, 2]
+        data = {
+            "labels": labels,
+            "default": default_items,
+        }
+        return Response(data)
+
 
 # #Cairo charts...
 #
@@ -535,35 +569,60 @@ class STRVAvailability(APIView):
         if serializer.is_valid():
             print("Serializer data:" + str(serializer.data))
             variety_posted = serializer.data['variety']
-            shop_from_stocks = serializer.data['shop']
-            dealer_details = Dealer_Registration.objects.filter(id=shop_from_stocks)
-            availability = Stock.objects.filter(variety_name=variety_posted, dealer_shop=shop_from_stocks)
+            #shop_from_stocks = serializer.data['shop']
+            #dealer_details = Dealer_Registration.objects.filter(id=shop_from_stocks)
+            #availability = Stock.objects.filter(variety_name=variety_posted)
             dealer_list = {}
+            dealer_ids = []
+            availability = []
+            #sub_dealer_list = {}
+            queryset1 = Stock.objects.filter(variety_name=variety_posted)
+            for obj1 in queryset1:
+                dealer_ids.append(obj1.id)
+
+            for obj2 in queryset1:
+                availability.append(obj2.available)
+
+            count = 0
+            for obj3 in dealer_ids:
+                count += 1
+                queryset2 = Dealer_Registration.objects.filter(id=obj3)
+                sub_dealer_list = {}
+                for obj4 in queryset2:
+                    sub_dealer_list['dealer'] = obj4.dealer_name
+                    sub_dealer_list['contact'] = obj4.contact_num
+
+                for obj5 in availability:
+                    sub_dealer_list['available'] = obj5
+
+                dealer_list['dealer'+str(count)] = sub_dealer_list
+
+
             # print("Availability2 is: " + str(availability))
-            for obj2 in availability:
-                dealer_list['available_from'] = obj2.available
+            #for obj2 in availability:
+            #    dealer_list['available_from'] = obj2.available
                 # print("Available is:" + str(availability2))
             # availability2 = availability.available
 
-            print("Length of queryset queried is:" + str(len(dealer_details)))
+            #print("Length of queryset queried is:" + str(len(dealer_details)))
             query_length = len(availability)
-            print("Dealer Details:" + str(dealer_details))
-            print("shop:" + str(shop_from_stocks))
+            #print("Dealer Details:" + str(dealer_details))
+            #print("shop:" + str(shop_from_stocks))
             dealer_stock_wise = []
-            for obj in dealer_details:
+            #for obj in dealer_details:
                 # dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num, "shop_name" : obj.shop_name }
-                dealer_list['dealer_name'] = obj.dealer_name
-                dealer_list['contact'] = obj.contact_num
-                dealer_list['shop_name'] = obj.shop_name
+             #   dealer_list['dealer_name'] = obj.dealer_name
+             #   dealer_list['contact'] = obj.contact_num
+              #  dealer_list['shop_name'] = obj.shop_name
                 # dealer_list['available'] = availability2
-                dealer_stock_wise.append(dealer_list,)
+              #  dealer_stock_wise.append(dealer_list,)
 
 
             if query_length == 0:
                 return Response( { "error" : "No data found..." }, status=status.HTTP_204_NO_CONTENT)
 
             else:
-                return Response(dealer_stock_wise, status=status.HTTP_200_OK)
+                return Response(dealer_list, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

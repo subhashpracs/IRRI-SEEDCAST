@@ -214,6 +214,7 @@ class Varietynew(models.Model):
 
 
 class VAWDemand(models.Model):
+    vaw = models.ForeignKey(VAW_Registration, db_column='VAW_Registration_id')
     village_name = models.ForeignKey(Villages)
     variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
@@ -228,6 +229,7 @@ class VAWDemand(models.Model):
         return str(self.village_name)
 
 class DealerDemand(models.Model):
+    dealer = models.ForeignKey(Dealer_Registration, db_column='Dealer_Registration_id')
     variety_name = models.ForeignKey(STRVVariety)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField()
@@ -287,7 +289,7 @@ class ViewDealerlist(models.Model):
 
 class STRAvailability(models.Model):
     variety = models.ForeignKey(STRVVariety)
-    shop = models.ForeignKey(Dealer_Registration)
+    #shop = models.ForeignKey(Dealer_Registration)
 
     def __str__(self):
         return str(self.variety)

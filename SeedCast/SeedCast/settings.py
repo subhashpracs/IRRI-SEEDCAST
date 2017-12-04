@@ -70,7 +70,7 @@ ROOT_URLCONF = 'SeedCast.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR, 'templates' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +84,12 @@ TEMPLATES = [
         },
     },
 ]
+
+#Telling Django to look up templates here...
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
 
 
 WSGI_APPLICATION = 'SeedCast.wsgi.application'

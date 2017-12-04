@@ -37,4 +37,7 @@ urlpatterns = [
     url(r'^graph/$', some.BarView.as_view()),
     url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT}),
     url(r'^feedback/$', some.FeedbackList.as_view()),
+    url(r'^charts/$', some.HomeView.as_view()),
+    url(r'^api/data/$', some.get_data, name='api-data'),
+    url(r'^api/chart/data/$', some.ChartData.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
