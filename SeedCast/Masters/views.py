@@ -328,7 +328,7 @@ class ViewDealer(APIView):
             query_length = len(queryset)
             dealer_dist_wise = []
             for obj in queryset:
-                dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num, "license" : obj.license_num }
+                dealer_list = { "dealer_name" : obj.dealer_name, "contact" : obj.contact_num, "license" : obj.license_num, "shop" : obj.shop_name }
                 dealer_dist_wise.append(dealer_list,)
 
 
@@ -583,9 +583,7 @@ class STRVAvailability(APIView):
             for obj2 in queryset1:
                 availability.append(obj2.available)
 
-            count = 0
             for obj3 in dealer_ids:
-                count += 1
                 queryset2 = Dealer_Registration.objects.filter(id=obj3)
                 sub_dealer_list = {}
                 for obj4 in queryset2:
@@ -595,7 +593,7 @@ class STRVAvailability(APIView):
                 for obj5 in availability:
                     sub_dealer_list['available'] = obj5
 
-                dealer_list['dealer'+str(count)] = sub_dealer_list
+                dealer_list['dealer'] = sub_dealer_list
 
 
             # print("Availability2 is: " + str(availability))

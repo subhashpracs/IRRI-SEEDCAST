@@ -217,6 +217,7 @@ class VAWDemand(models.Model):
     vaw = models.ForeignKey(VAW_Registration, db_column='VAW_Registration_id')
     village_name = models.ForeignKey(Villages)
     variety_name = models.ForeignKey(STRVVariety)
+    variety2 = models.CharField(max_length=100)
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField(default=datetime.now())
     check = models.BooleanField()
