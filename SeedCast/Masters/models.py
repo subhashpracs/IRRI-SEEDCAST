@@ -20,7 +20,6 @@ class States(models.Model):
 
 
 class Districts(models.Model):
-
     state_name = models.ForeignKey(States)
     dist_name = models.CharField(max_length=100, primary_key=True)
 
