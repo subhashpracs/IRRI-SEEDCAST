@@ -16,6 +16,13 @@ admin.site.site_title = 'IRRI-SeedCast'
 
 admin.site.register(States)
 
+# @admin.register(Graph1)
+# class Graph1Admin(ModelAdmin):
+#     change_list_template = 'templates/charts2.html'
+#     date_hierarchy = 'created'
+
+
+
 
 #Dealer Registration
 class DealerResource(resources.ModelResource):

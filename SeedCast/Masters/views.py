@@ -9,14 +9,18 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability
-from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PilotPlotsSerializer, STRAvailabilitySerializer
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability, Plotsnew
+from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PlotsSerializer, STRAvailabilitySerializer, PilotplotsSerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
 from highcharts.views import HighChartsPieView
 from rest_framework import status
 from django.http import JsonResponse
 from django.views.generic import View
+from jchart import Chart
+
+
+# class
 
 
 
@@ -342,23 +346,54 @@ class ViewDealer(APIView):
 
 class Plots(APIView):
 
+
+
+    # def get(self, request, format=None):
+    #     plotsall = Pilotplots.objects.all()
+    #     serializer = PlotsSerializer(plotsall, many=True)
+    #     return Response(serializer.data)
+    #
+
     @csrf_exempt
     def post(self, request, format=None):
-        serializer = PilotPlotsSerializer(data=request.data)
+        serializer = PlotsSerializer(data=request.data)
         if serializer.is_valid():
             dist_posted = serializer.data['dist_name']
             block_posted = serializer.data['block_name']
-            #panchayat_posted = serializer.data['panchayat_name']
-            queryset = Dealer_Registration.objects.filter(dist_name=dist_posted,block_name=block_posted)
-            dealer_list_dbp_wise = []
+            panchayat_posted = serializer.data['panchayat_name']
+            queryset = Pilotplots.objects.filter(dist_name=dist_posted,block_name=block_posted, panchayat_name=panchayat_posted)
+            farmer_list_dbp_wise = []
             for obj in queryset:
-                dealer_list = { "shop" : obj.shop_name, "dealer" : obj.dealer_name }
-                dealer_list_dbp_wise.append(dealer_list,)
+                farmer_list = { "farmer" : obj.farmer_name, "contact" : obj.contact_num }
+                farmer_list_dbp_wise.append(farmer_list)
+            print("Farmer List:" + str(farmer_list_dbp_wise))
 
-            print("Dealer List:" + str(dealer_list_dbp_wise))
+            return Response(farmer_list_dbp_wise, status=status.HTTP_200_OK)
 
-            return Response(dealer_list_dbp_wise, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PlotsDetails(APIView):
+    """
+    Retrieve, update or delete a user instance.
+    """
+
+    def get_object(self, pk):
+        try:
+            return Pilotplots.objects.get(pk=pk)
+        except Pilotplots.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        plots = self.get_object(pk)
+        plot = PilotplotsSerializer(plots)
+        return Response(plot.data)
+
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk)
+        serializer = PilotplotsSerializer(user, data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -572,7 +607,7 @@ class STRVAvailability(APIView):
             #shop_from_stocks = serializer.data['shop']
             #dealer_details = Dealer_Registration.objects.filter(id=shop_from_stocks)
             #availability = Stock.objects.filter(variety_name=variety_posted)
-            dealer_list = {}
+            dealer_list = []
             dealer_ids = []
             availability = []
             #sub_dealer_list = {}
@@ -593,7 +628,7 @@ class STRVAvailability(APIView):
                 for obj5 in availability:
                     sub_dealer_list['available'] = obj5
 
-                dealer_list['dealer'] = sub_dealer_list
+                dealer_list.append(sub_dealer_list)
 
 
             # print("Availability2 is: " + str(availability))

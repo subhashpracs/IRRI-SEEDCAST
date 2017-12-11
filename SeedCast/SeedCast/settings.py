@@ -43,9 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'multiselectfield',
     'rest_framework',
-    'report_builder',
     'highcharts',
     'corsheaders',
+    'jchart',
     #'rest_framework.authtoken',
 ]
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability, Plotsnew
 
 class DealerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,6 +77,11 @@ class StockSerializer(serializers.ModelSerializer):
         model = Stock
         fields = '__all__'
 
+class PilotplotsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pilotplots
+        fields = '__all__'
+
 class VAWDemandSerializer(serializers.ModelSerializer):
     class Meta:
         model = VAWDemand
@@ -107,10 +112,9 @@ class ViewDealerSerializer(serializers.ModelSerializer):
 
 
 
-
-class PilotPlotsSerializer(serializers.ModelSerializer):
+class PlotsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Pilotplots
+        model = Plotsnew
         fields = '__all__'
 
 

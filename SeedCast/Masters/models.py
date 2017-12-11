@@ -5,6 +5,7 @@ from django.core.validators import RegexValidator, MinLengthValidator
 from multiselectfield import MultiSelectField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
+from jchart import Chart
 
 
 # Create your models here.
@@ -19,6 +20,7 @@ class States(models.Model):
 
 
 class Districts(models.Model):
+
     state_name = models.ForeignKey(States)
     dist_name = models.CharField(max_length=100, primary_key=True)
 
@@ -259,15 +261,29 @@ class Stock(models.Model):
         return str(self.variety_name)
 
 class Pilotplots(models.Model):
+    farmer_name = models.CharField(max_length=255)
+    contact_num = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(10)])
     dist_name = models.ForeignKey(Districts)
     block_name = models.ForeignKey(Blocks)
-    #panchayat_name = models.ForeignKey(Panchayats)
+    panchayat_name = models.ForeignKey(Panchayats)
+    village = models.ForeignKey(Villages)
+    variety = models.ForeignKey(STRVVariety)
+
 
     class Meta:
         verbose_name = 'Pilot Plots'
 
     def __str__(self):
         return str(self.dist_name)
+
+class Plotsnew(models.Model):
+    dist_name =  models.ForeignKey(Districts)
+    block_name = models.ForeignKey(Blocks)
+    panchayat_name = models.ForeignKey(Panchayats)
+
+    class Meta:
+        verbose_name = "Plots Post"
+
 
 class Feedback(models.Model):
     name = models.CharField(max_length=255)
@@ -294,5 +310,12 @@ class STRAvailability(models.Model):
 
     def __str__(self):
         return str(self.variety)
+
+#Graphs...
+# class Graph1(models.Model):
+#     class Meta:
+#         proxy = True
+#         verbose_name = 'Variety wise Demand'
+#         verbose_name_plural = 'Variety wise Demands'
 
 

@@ -28,7 +28,8 @@ urlpatterns = [
     url(r'^vaw_list_mob/', views.VAWMobileList.as_view()),
     url(r'^varietynew/', views.STRVVarietyNew.as_view()),
     url(r'^view_dealer/', views.ViewDealer.as_view()),
-    url(r'plots/', views.Plots.as_view()),
+    url(r'plots/$', views.Plots.as_view()),
+    url(r'plots/(?P<pk>[0-9]+)/$', views.PlotsDetails.as_view()),
 #    url(r'example/', views.Example.as_view()),
     url(r'^avail/$', views.STRVAvailability.as_view()),
 ]
