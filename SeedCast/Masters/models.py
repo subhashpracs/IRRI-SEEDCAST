@@ -5,7 +5,6 @@ from django.core.validators import RegexValidator, MinLengthValidator
 from multiselectfield import MultiSelectField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from jchart import Chart
 
 
 # Create your models here.
@@ -20,6 +19,7 @@ class States(models.Model):
 
 
 class Districts(models.Model):
+
     state_name = models.ForeignKey(States)
     dist_name = models.CharField(max_length=100, primary_key=True)
 

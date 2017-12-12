@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^export/xls_users/$', views.export_users_xls, name='export_users_xls'),
     url(r'^xls/$', views.export_xls, name='export_xls'),
     url(r'^registrations/', include('Masters.urls')),
-    #url(r'^report_builder/', include('report_builder.urls')),
+    url(r'^report_builder/', include('report_builder.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^graph/$', some.BarView.as_view()),
     url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT}),

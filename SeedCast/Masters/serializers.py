@@ -77,11 +77,6 @@ class StockSerializer(serializers.ModelSerializer):
         model = Stock
         fields = '__all__'
 
-class PilotplotsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Pilotplots
-        fields = '__all__'
-
 class VAWDemandSerializer(serializers.ModelSerializer):
     class Meta:
         model = VAWDemand
