@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator, MinLengthValidator
 from multiselectfield import MultiSelectField
 from django.utils.translation import ugettext_lazy as _
 from django import forms
-from jchart import Chart
+# from jchart import Chart
 
 
 # Create your models here.

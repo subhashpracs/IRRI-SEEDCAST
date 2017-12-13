@@ -255,10 +255,10 @@ class VillagesAdmin(ImportExportActionModelAdmin):
 admin.site.register(Villages, VillagesAdmin)
 
 #Report Builder
-class ReportBuilder:
-    fields = (
-    'id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name','block_name', 'spo', 'date', 'pincode')
-
+# class ReportBuilder:
+#     fields = (
+#     'id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name','block_name', 'spo', 'date', 'pincode')
+#
 
 
 admin.site.index_title = 'Admin Panel'

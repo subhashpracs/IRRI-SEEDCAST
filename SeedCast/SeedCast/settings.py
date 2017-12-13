@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'highcharts',
     'corsheaders',
-    'jchart',
+    # 'jchart',
     #'rest_framework.authtoken',
 ]
 
@@ -165,9 +165,9 @@ STATICFILES_FINDERS = [
 
 
 
-# MEDIA_ROOT = '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast'
+MEDIA_ROOT = '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast'
 
-MEDIA_ROOT = '/home/sai/Desktop/SeedCast'
+#MEDIA_ROOT = '/home/sai/Desktop/SeedCast'
 
 JET_DEFAULT_THEME = 'green' #For Default Theme Colour
 

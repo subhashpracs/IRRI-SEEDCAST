@@ -17,7 +17,7 @@ from highcharts.views import HighChartsPieView
 from rest_framework import status
 from django.http import JsonResponse
 from django.views.generic import View
-from jchart import Chart
+# from jchart import Chart
 
 
 # class
