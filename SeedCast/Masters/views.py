@@ -371,7 +371,7 @@ class Plots(APIView):
             length_farmer_list = len(farmer_list_dbp_wise)
 
             if(length_farmer_list==0):
-                return Response("{'no_data' : 'No data found!!!' }", status=status.HTTP_404_NOT_FOUND)
+                return Response( {'no_data' : 'No data found!!!' } , status=status.HTTP_404_NOT_FOUND)
 
             else:
                 return Response(farmer_list_dbp_wise, status=status.HTTP_200_OK)
