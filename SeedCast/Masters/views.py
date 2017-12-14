@@ -368,7 +368,13 @@ class Plots(APIView):
                 farmer_list_dbp_wise.append(farmer_list)
             print("Farmer List:" + str(farmer_list_dbp_wise))
 
-            return Response(farmer_list_dbp_wise, status=status.HTTP_200_OK)
+            length_farmer_list = len(farmer_list_dbp_wise)
+
+            if(length_farmer_list==0):
+                return Response("{'no_data' : 'No data found!!!' }", status=status.HTTP_404_NOT_FOUND)
+
+            else:
+                return Response(farmer_list_dbp_wise, status=status.HTTP_200_OK)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
