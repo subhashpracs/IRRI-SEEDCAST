@@ -44,11 +44,80 @@ class ChartData(APIView):
 
     def get(self, request, format=None):
         qs_count = User.objects.all().count()
-        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
-        default_items = [qs_count, 23, 2, 3, 12, 2]
+        variety_labels_vaw = VAWDemand.objects.all()
+        varieties = []
+        for obj in variety_labels_vaw:
+            varieties.append(str(obj.variety_name))
+
+        new_labels = varieties
+        print("list is: " + str(varieties))
+        # labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        # default_items = [qs_count, 23, 2, 3, 12, 2]
+
+        demands = []
+        for object in variety_labels_vaw:
+            demands.append(object.quantity)
+
+        #new_demands = demands
+
+        print("Demands:" + str(demands))
+
+        final_varieties = []
+        varieties_index = []
+        for i in varieties:
+            if i not in final_varieties:
+                final_varieties.append(i)
+                varieties_index.append(varieties.index(i))
+
+        print("Final varieties are:" + str(final_varieties))
+        print("Final varieties indexes:" + str(varieties_index))
+
+        k=0
+        final_demand = [0]*len(final_varieties)
+        # for sb in range(0,len(final_varieties)):
+        #     final_demand[sb].append(0)
+
+        print("Initialization of final_demand:" + str(final_demand))
+        excepted_indexes = []
+        for i in range(0,len(varieties)):
+            if i not in excepted_indexes:
+                j = i+1
+                count = 0
+                while(j<len(varieties)):
+                    if(varieties[i] == varieties[j]):
+                        excepted_indexes.append(j)
+                        if(count==0):
+                            final_demand[k] = demands[i] + demands[j]
+                            count+=1
+
+                        else:
+                            final_demand[k]+=demands[j]
+
+                    else:
+                        #pass
+                        print("Nothing here...in while")
+
+                    j=j+1
+
+                k=k+1
+
+            else:
+                #pass
+                print("Nothing in excepted_indexes...")
+
+
+            for i in range(0, len(final_demand)):
+                if(final_demand[i]==0):
+                    final_demand[i]+=demands[varieties_index[i]]
+
+                else:
+                    pass
+
+        print("The logic is checking here...:" + "Final varieties:"+ str(final_varieties) + "\n \t Final Demands...:" + str(final_demand))
+
         data = {
-            "labels": labels,
-            "default": default_items,
+            "labels": final_varieties,
+            "default": final_demand,
         }
         return Response(data)
 
@@ -344,8 +413,8 @@ class ViewDealer(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class Plots(APIView):
 
+class Plots(APIView):
 
 
     # def get(self, request, format=None):
@@ -371,7 +440,7 @@ class Plots(APIView):
             length_farmer_list = len(farmer_list_dbp_wise)
 
             if(length_farmer_list==0):
-                return Response( {'no_data' : 'No data found!!!' } , status=status.HTTP_404_NOT_FOUND)
+                return Response( { "no_data" : "No data found!!!" } , status=status.HTTP_204_NO_CONTENT)
 
             else:
                 return Response(farmer_list_dbp_wise, status=status.HTTP_200_OK)
