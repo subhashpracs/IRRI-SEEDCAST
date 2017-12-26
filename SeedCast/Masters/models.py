@@ -310,11 +310,11 @@ class STRAvailability(models.Model):
     def __str__(self):
         return str(self.variety)
 
-#Graphs...
-# class Graph1(models.Model):
+# #Graphs...
+# class Graph1(VAWDemand, models):
 #     class Meta:
 #         proxy = True
 #         verbose_name = 'Variety wise Demand'
 #         verbose_name_plural = 'Variety wise Demands'
-
-
+#
+#

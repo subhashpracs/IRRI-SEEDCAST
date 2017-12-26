@@ -119,6 +119,28 @@ admin.site.register(STRVVariety, STRVVarietyAdmin)
 
 admin.site.register(VAWDemand)
 
+
+#Dealer Demand
+class DealerDemandResource(resources.ModelResource):
+    class Meta:
+        model = DealerDemand
+        fields = ('dealer_get', 'get_variety_name', 'quantity', 'date_collected', 'chk')
+
+
+class DealerDemandAdmin(ModelAdmin):
+    list_display = ('id', 'dealer_get', 'get_variety_name', 'quantity', 'date_collected', 'chk')
+    resource_class = DealerDemandResource
+    def dealer_get(self, obj1):
+        return obj1.dealer.dealer_name
+    dealer_get.admin_order_field = 'Dealer'
+    dealer_get.short_description = 'Dealer...'
+
+
+    def get_variety_name(self,obj):
+        return obj.variety_name_variety_name
+    get_variety_name.admin_order_field = 'variety'
+    get_variety_name.short_description = 'Variety'
+
 admin.site.register(DealerDemand)
 
 admin.site.register(Pilotplots)

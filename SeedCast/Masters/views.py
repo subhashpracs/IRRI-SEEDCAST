@@ -414,6 +414,36 @@ class ViewDealer(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class PlotsBlocks(APIView):
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = PlotsSerializer(data=request.data)
+        if serializer.is_valid():
+            dist_posted = serializer.data['dist_name']
+            blocks = Panchayats.objects.filter(dist_name=dist_posted)
+            blocks_list = []
+            for i in blocks:
+                blocks_list.append(i.block_name)
+
+            return Response(blocks_list, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PlotsPanchayat(APIView):
+    @csrf_exempt
+    def post(self, request, format=None):
+        serializer = PlotsSerializer(data=request.data)
+        if serializer.is_valid():
+            dist_posted = serializer.data['block_name']
+            blocks = Panchayats.objects.filter(dist_name=dist_posted)
+            blocks_list = []
+            for i in blocks:
+                blocks_list.append(i.block_name)
+
+            return Response(blocks_list, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class Plots(APIView):
 
 
