@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+<<<<<<< HEAD
 # import dashboard
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +49,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'highcharts',
     'corsheaders',
+<<<<<<< HEAD
+=======
+    # 'jchart',
+    #'rest_framework.authtoken',
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 ]
 
 MIDDLEWARE = [
@@ -101,6 +109,14 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+<<<<<<< HEAD
+=======
+        # 'OPTIONS': {
+        #     # ...
+        #     'timeout': 100,
+        #     # ...
+        # }
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
     }
 }
 
@@ -159,7 +175,10 @@ STATICFILES_FINDERS = [
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 MEDIA_ROOT = '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast'
 
 #MEDIA_ROOT = '/home/sai/Desktop/SeedCast'
@@ -167,9 +186,12 @@ MEDIA_ROOT = '/home/ubuntu/irri-pracs/SeedCastfromGit/IRRI-Test/SeedCast'
 JET_DEFAULT_THEME = 'green' #For Default Theme Colour
 
 
+<<<<<<< HEAD
 JET_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 
 
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 #XLS Importer...
 DATA_IMPORTER_EXCEL_DECODER = "cp1252"
 

@@ -2,6 +2,13 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin#It is useful when using list filters
 from import_export.admin import ImportExportActionModelAdmin, ImportExportModelAdmin
 from django.contrib.admin import register, ModelAdmin
+<<<<<<< HEAD
+=======
+from import_export.instance_loaders import BaseInstanceLoader
+from import_export import fields
+#django-import-export
+from jet.admin import CompactInline
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 from import_export import resources
 from Masters.models import Dealer_Registration,AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, States, Districts, Blocks, Panchayats, Villages, VAWDemand, DealerDemand, Pilotplots, Feedback, Stock, VAWDemand, SPO
 
@@ -12,6 +19,15 @@ admin.site.site_title = 'IRRI-SeedCast'
 
 admin.site.register(States)
 
+<<<<<<< HEAD
+=======
+# @admin.register(Graph1)
+# class Graph1Admin(ModelAdmin):
+#     change_list_template = 'templates/charts2.html'
+#     date_hierarchy = 'created'
+
+
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 
 #Dealer Registration
@@ -28,8 +44,14 @@ class DealerResource(resources.ModelResource):
 class DealerAdmin(ImportExportActionModelAdmin):
      list_display = ('id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name', 'block_name', 'dealer_spo', 'date', 'dealer_pincode',)
      search_fields = ('shop_name', 'dealer_name',)
+<<<<<<< HEAD
      # list_per_page = 10
      resource_class = DealerResource
+=======
+     list_per_page = 10
+     resource_class = DealerResource
+     # inlines = [DealerInline]
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 
 admin.site.register(Dealer_Registration, DealerAdmin)
@@ -84,6 +106,12 @@ class STRVCatAdmin(ModelAdmin):
 admin.site.register(STRVCategory, STRVCatAdmin)
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 #STRV Variety...
 class STRVVarietyResource(resources.ModelResource):
     class Meta:
@@ -103,6 +131,7 @@ class STRVVarietyAdmin(ModelAdmin):
 admin.site.register(STRVVariety, STRVVarietyAdmin)
 
 
+<<<<<<< HEAD
 #VAW Demand
 class VAWDemandResource(resources.ModelResource):
     class Meta:
@@ -116,10 +145,16 @@ class VAWDemandAdmin(ModelAdmin):
 
 admin.site.register(VAWDemand, VAWDemandAdmin)
 
+=======
+admin.site.register(VAWDemand)
+
+
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 #Dealer Demand
 class DealerDemandResource(resources.ModelResource):
     class Meta:
         model = DealerDemand
+<<<<<<< HEAD
         fields = ('dealer', 'variety_name', 'quantity', 'date_collected', 'chk')
 
 
@@ -128,6 +163,26 @@ class DealerDemandAdmin(ModelAdmin):
     resource_class = DealerDemandResource
 
 admin.site.register(DealerDemand, DealerDemandAdmin)
+=======
+        fields = ('dealer_get', 'get_variety_name', 'quantity', 'date_collected', 'chk')
+
+
+class DealerDemandAdmin(ModelAdmin):
+    list_display = ('id', 'dealer_get', 'get_variety_name', 'quantity', 'date_collected', 'chk')
+    resource_class = DealerDemandResource
+    def dealer_get(self, obj1):
+        return obj1.dealer.dealer_name
+    dealer_get.admin_order_field = 'Dealer'
+    dealer_get.short_description = 'Dealer...'
+
+
+    def get_variety_name(self,obj):
+        return obj.variety_name_variety_name
+    get_variety_name.admin_order_field = 'variety'
+    get_variety_name.short_description = 'Variety'
+
+admin.site.register(DealerDemand)
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 admin.site.register(Pilotplots)
 
@@ -262,6 +317,15 @@ class VillagesAdmin(ImportExportActionModelAdmin):
 
 admin.site.register(Villages, VillagesAdmin)
 
+<<<<<<< HEAD
+=======
+#Report Builder
+# class ReportBuilder:
+#     fields = (
+#     'id', 'shop_name', 'license_num', 'company_type', 'dealer_name', 'contact_num', 'address', 'state_name', 'dist_name','block_name', 'spo', 'date', 'pincode')
+#
+
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 admin.site.index_title = 'Admin Panel'
 

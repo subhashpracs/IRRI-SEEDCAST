@@ -20,7 +20,10 @@ from SeedCast import views
 import Masters.views as some
 from django.conf.urls.static import static
 from django.conf import settings
+<<<<<<< HEAD
 from controlcenter.views import controlcenter
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 
 admin.autodiscover()
@@ -29,11 +32,18 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
     # url(r'^admin/dashboard2/$', controlcenter.urls),
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
     url(r'^', admin.site.urls),
     url(r'^export/xls_users/$', views.export_users_xls, name='export_users_xls'),
     url(r'^xls/$', views.export_xls, name='export_xls'),
     url(r'^registrations/', include('Masters.urls')),
+<<<<<<< HEAD
+=======
+    #url(r'^report_builder/', include('report_builder.urls')),
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^graph/$', some.BarView.as_view()),
     url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT}),

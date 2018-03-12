@@ -51,6 +51,12 @@ class ChartData(APIView):
 
         new_labels = varieties
         print("list is: " + str(varieties))
+<<<<<<< HEAD
+=======
+        # labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
+        # default_items = [qs_count, 23, 2, 3, 12, 2]
+
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         demands = []
         for object in variety_labels_vaw:
             demands.append(object.quantity)
@@ -71,7 +77,14 @@ class ChartData(APIView):
 
         k=0
         final_demand = [0]*len(final_varieties)
+<<<<<<< HEAD
 
+=======
+        # for sb in range(0,len(final_varieties)):
+        #     final_demand[sb].append(0)
+
+        print("Initialization of final_demand:" + str(final_demand))
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         excepted_indexes = []
         for i in range(0,len(varieties)):
             if i not in excepted_indexes:
@@ -88,16 +101,26 @@ class ChartData(APIView):
                             final_demand[k]+=demands[j]
 
                     else:
+<<<<<<< HEAD
                         pass
                         # print("Nothing here...in while")
+=======
+                        #pass
+                        print("Nothing here...in while")
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
                     j=j+1
 
                 k=k+1
 
             else:
+<<<<<<< HEAD
                 pass
               #  print("Nothing in excepted_indexes...")
+=======
+                #pass
+                print("Nothing in excepted_indexes...")
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 
             for i in range(0, len(final_demand)):
@@ -107,12 +130,17 @@ class ChartData(APIView):
                 else:
                     pass
 
+<<<<<<< HEAD
        # print("The logic is checking here...:" + "Final varieties:"+ str(final_varieties) + "\n \t Final Demands...:" + str(final_demand))
+=======
+        print("The logic is checking here...:" + "Final varieties:"+ str(final_varieties) + "\n \t Final Demands...:" + str(final_demand))
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
         data = {
             "labels": final_varieties,
             "default": final_demand,
         }
+<<<<<<< HEAD
 
         data2 = {
             "labels2": ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -120,6 +148,8 @@ class ChartData(APIView):
         }
 
 
+=======
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         return Response(data)
 
 

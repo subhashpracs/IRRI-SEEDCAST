@@ -25,7 +25,11 @@ class Districts(models.Model):
 
     class Meta:
         verbose_name = _('District')
+<<<<<<< HEAD
         verbose_name_plural = _('Districts')
+=======
+        verbose_name_plural = _('District\'s')
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
     def __str__(self):
         return self.dist_name
@@ -218,7 +222,11 @@ class VAWDemand(models.Model):
     vaw = models.ForeignKey(VAW_Registration, db_column='VAW_Registration_id')
     village_name = models.CharField(max_length=255)
     variety_name = models.ForeignKey(STRVVariety)
+<<<<<<< HEAD
     varietyName = models.CharField(max_length=100)
+=======
+    variety2 = models.CharField(max_length=100)
+>>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
     quantity = models.PositiveIntegerField()
     date_collected = models.DateField(default=datetime.now())
     check = models.BooleanField()
