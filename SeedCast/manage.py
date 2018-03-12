@@ -2,11 +2,8 @@
 import os
 import sys
 
-<<<<<<< HEAD
 # print(sys.path)
 
-=======
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SeedCast.settings")
     try:

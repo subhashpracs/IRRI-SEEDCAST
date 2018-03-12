@@ -25,11 +25,7 @@ class Districts(models.Model):
 
     class Meta:
         verbose_name = _('District')
-<<<<<<< HEAD
         verbose_name_plural = _('Districts')
-=======
-        verbose_name_plural = _('District\'s')
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
     def __str__(self):
         return self.dist_name
@@ -41,7 +37,7 @@ class Blocks(models.Model):
 
     class Meta:
         verbose_name = ('Block')
-        verbose_name_plural = ('Block\'s')
+        verbose_name_plural = ('Blocks')
 
     def __str__(self):
         return self.block_name
@@ -188,6 +184,37 @@ class STRVVariety(models.Model):
     def __str__(self):
         return self.variety_name
 
+# class VAWDemand(models.Model):
+#     vaw = models.ForeignKey(VAW_Registration, db_column='VAW_Registration_id')
+#     village_name = models.CharField(max_length=255)
+#     variety_name = models.ForeignKey(STRVVariety)
+#     varietyName = models.CharField(max_length=100)
+#     quantity = models.PositiveIntegerField()
+#     date_collected = models.DateField(default=datetime.now())
+#     check = models.BooleanField()
+#
+#     class Meta:
+#         verbose_name = 'VAW-Demand'
+#         verbose_name_plural = 'VAW-Demands'
+#
+#     def __str__(self):
+#         return str(self.village_name)
+#
+# class DealerDemand(models.Model):
+#     dealer = models.ForeignKey(Dealer_Registration, db_column='Dealer_Registration_id')
+#     variety_name = models.ForeignKey(STRVVariety)
+#     quantity = models.PositiveIntegerField()
+#     date_collected = models.DateField()
+#     chk = models.BooleanField(default=True)
+#
+#     class Meta:
+#         verbose_name = 'Dealer Demand'
+#         verbose_name_plural = 'Dealer Demands'
+#
+#     def __str__(self):
+#         return str(self.quantity)
+
+
 
 class Mobnum(models.Model):
     mobnum = models.CharField(max_length=10, validators=[RegexValidator(r'^\d{1,10}$'), MinLengthValidator(10)])
@@ -218,39 +245,6 @@ class Varietynew(models.Model):
         return str(self.category)
 
 
-class VAWDemand(models.Model):
-    vaw = models.ForeignKey(VAW_Registration, db_column='VAW_Registration_id')
-    village_name = models.CharField(max_length=255)
-    variety_name = models.ForeignKey(STRVVariety)
-<<<<<<< HEAD
-    varietyName = models.CharField(max_length=100)
-=======
-    variety2 = models.CharField(max_length=100)
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
-    quantity = models.PositiveIntegerField()
-    date_collected = models.DateField(default=datetime.now())
-    check = models.BooleanField()
-
-    class Meta:
-        verbose_name = 'VAW-Demand'
-        verbose_name_plural = 'VAW-Demands'
-
-    def __str__(self):
-        return str(self.village_name)
-
-class DealerDemand(models.Model):
-    dealer = models.ForeignKey(Dealer_Registration, db_column='Dealer_Registration_id')
-    variety_name = models.ForeignKey(STRVVariety)
-    quantity = models.PositiveIntegerField()
-    date_collected = models.DateField()
-    chk = models.BooleanField(default=True)
-
-    class Meta:
-        verbose_name = 'Dealer Demand'
-        verbose_name_plural = 'Dealer Demands'
-
-    def __str__(self):
-        return str(self.quantity)
 
 class Stock(models.Model):
     dealer_shop = models.ForeignKey(Dealer_Registration, db_column='Dealer_Registration_id')

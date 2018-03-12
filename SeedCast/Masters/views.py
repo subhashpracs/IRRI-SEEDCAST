@@ -9,7 +9,9 @@ import random
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import request, Http404
-from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, DealerDemand, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, VAWDemand, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability, Plotsnew
+
+from Reports.models import VAWDemand, DealerDemand
+from .models import Dealer_Registration, AAO_Registration, VAW_Registration, STRVCategory, STRVVariety, Mobnum, Feedback, States, Districts, Blocks, Panchayats, Villages, Stock, SPO, Vawmobnum, Varietynew, ViewDealerlist, Pilotplots, STRAvailability, Plotsnew
 from .serializers import DealerSerializer, AAOSerializer, VAWSerializer, STRVCategorySerializer, STRVVarietySerializer, MobnumSerializer, DealerDemandSerializer, FeedbackSerializer, StatesSerializer, DistrictsSerializer, BlocksSerializer, PanchayatsSerializer, VillagesSerializer, StockSerializer, VAWDemandSerializer, SPOSerializer, VAWMobSerializer, VarietynewSerializer, ViewDealerSerializer, PlotsSerializer, STRAvailabilitySerializer, PilotplotsSerializer
 from rest_framework import generics
 from highcharts.views import HighChartsBarView
@@ -51,12 +53,6 @@ class ChartData(APIView):
 
         new_labels = varieties
         print("list is: " + str(varieties))
-<<<<<<< HEAD
-=======
-        # labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
-        # default_items = [qs_count, 23, 2, 3, 12, 2]
-
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         demands = []
         for object in variety_labels_vaw:
             demands.append(object.quantity)
@@ -77,14 +73,7 @@ class ChartData(APIView):
 
         k=0
         final_demand = [0]*len(final_varieties)
-<<<<<<< HEAD
 
-=======
-        # for sb in range(0,len(final_varieties)):
-        #     final_demand[sb].append(0)
-
-        print("Initialization of final_demand:" + str(final_demand))
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         excepted_indexes = []
         for i in range(0,len(varieties)):
             if i not in excepted_indexes:
@@ -101,26 +90,16 @@ class ChartData(APIView):
                             final_demand[k]+=demands[j]
 
                     else:
-<<<<<<< HEAD
                         pass
                         # print("Nothing here...in while")
-=======
-                        #pass
-                        print("Nothing here...in while")
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
                     j=j+1
 
                 k=k+1
 
             else:
-<<<<<<< HEAD
                 pass
               #  print("Nothing in excepted_indexes...")
-=======
-                #pass
-                print("Nothing in excepted_indexes...")
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
 
             for i in range(0, len(final_demand)):
@@ -130,17 +109,12 @@ class ChartData(APIView):
                 else:
                     pass
 
-<<<<<<< HEAD
        # print("The logic is checking here...:" + "Final varieties:"+ str(final_varieties) + "\n \t Final Demands...:" + str(final_demand))
-=======
-        print("The logic is checking here...:" + "Final varieties:"+ str(final_varieties) + "\n \t Final Demands...:" + str(final_demand))
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
 
         data = {
             "labels": final_varieties,
             "default": final_demand,
         }
-<<<<<<< HEAD
 
         data2 = {
             "labels2": ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -148,43 +122,7 @@ class ChartData(APIView):
         }
 
 
-=======
->>>>>>> 97dc6007734f4106dbe23511c38c457bb2084a43
         return Response(data)
-
-
-# #Cairo charts...
-#
-#
-# import pycha.bar
-# import cairo
-#
-# class Example(APIView):
-#
-#     width, height = (500, 400)
-#     surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-#
-#
-#
-#     dataSet = (
-#       ('dataSet 1', ((0, 1), (1, 3), (2, 2.5))),
-#       ('dataSet 2', ((0, 2), (1, 4), (2, 3))),
-#       ('dataSet 3', ((0, 5), (1, 1), (2, 0.5))),
-#     )
-#
-#
-#     options = {
-#         'legend': {'hide': True},
-#         'background': {'color': '#f0f0f0'},
-#     }
-#
-#     chart = pycha.bar.VerticalBarChart(surface, options)
-#     chart.addDataset(dataSet)
-#     #chart.render()
-#
-#
-#
-#     surface.write_to_png('output.png')
 
 
 
