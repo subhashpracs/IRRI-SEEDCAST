@@ -282,16 +282,20 @@ class STRVVarietyNew(APIView):
             variety_list = []
             for obj in queryset:
                 variety = obj.variety_name
+                variety_ori = obj.variety_name_oriya
                 varietycode = obj.variety_code
                 descriptionn = obj.description
+                description_ori = obj.description_oriya
                 duration = obj.duration_in_days
                 land = obj.suitable_land_type
+                land_ori = obj.suitable_land_type_oriya
                 height = obj.plant_height
                 grain = obj.grain_type
+                grain_ori = obj.grain_type_ori
                 yieldin = obj.yield_in_tonne
                 advantage = obj.yield_advantage
                 category = obj.category_name
-                variety_dic = { "variety_name" : variety, "variety_code" : varietycode, "description" : descriptionn, "duration_in_days" : duration, "suitable_land_type" : land, "plant_height" : height, "grain_type" : grain, "yield_in_tonne" : yieldin, "yield_advantage" : advantage }
+                variety_dic = { "variety_name" : variety, "variety_name_oriya" : variety_ori, "variety_code" : varietycode, "description" : descriptionn, "description_oriya" : description_ori, "duration_in_days" : duration, "suitable_land_type" : land, "suitable_land_type_oriya" : land_ori, "plant_height" : height, "grain_type" : grain, "grain_type_ori" : grain_ori, "yield_in_tonne" : yieldin, "yield_advantage" : advantage }
                 variety_list.append(variety_dic,)
 
             print("Variety List:" + str(variety_list))

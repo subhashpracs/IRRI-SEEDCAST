@@ -80,10 +80,10 @@ admin.site.register(STRVCategory, STRVCatAdmin)
 class STRVVarietyResource(resources.ModelResource):
     class Meta:
         model = STRVVariety
-        fields = ('id', 'category_name_get', 'variety_name', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
+        fields = ('id', 'category_name_get', 'variety_name','variety_name_oriya', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
 
 class STRVVarietyAdmin(ModelAdmin):
-    list_display = ('id', 'category_name_get', 'variety_name', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
+    list_display = ('id', 'category_name_get', 'variety_name', 'variety_name_oriya', 'variety_code', 'description', 'duration_in_days', 'suitable_land_type', 'plant_height', 'grain_type', 'yield_in_tonne')
     search_fields = ('variety_name', 'variety_code',)
     resource_class = STRVVarietyResource
 
